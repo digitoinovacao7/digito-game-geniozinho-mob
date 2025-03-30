@@ -61,7 +61,7 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
     this.isTimer = (isTimer == null) ? true : isTimer;
     adsFile = new AdsFile(c);
 
-    adsFile.createInterstitialAd()
+    adsFile.createInterstitialAd();
     print("isTimer12===$isTimer");
   }
 
