@@ -50,19 +50,18 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
   late AdsFile adsFile;
   late BuildContext c;
 
-  GameProvider(
-      {required TickerProvider vsync,
-      required this.gameCategoryType,
-      required this.c,
-      bool? isTimer})
+  GameProvider({required TickerProvider vsync,
+    required this.gameCategoryType,
+    required this.c,
+    bool? isTimer})
       : super(
-          vsync: vsync,
-          totalTime: KeyUtil.getTimeUtil(gameCategoryType),
-        ) {
+    vsync: vsync,
+    totalTime: KeyUtil.getTimeUtil(gameCategoryType),
+  ) {
     this.isTimer = (isTimer == null) ? true : isTimer;
     adsFile = new AdsFile(c);
 
-    adsFile.createRewardedAd();
+    adsFile.createInterstitialAd()
     print("isTimer12===$isTimer");
   }
 
@@ -109,7 +108,7 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         break;
       case AppLifecycleState.inactive:
-        // widget is inactive
+      // widget is inactive
         break;
       case AppLifecycleState.paused:
         if (isTimer) {
@@ -121,7 +120,7 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
       case AppLifecycleState.detached:
         break;
       case AppLifecycleState.hidden:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         break;
     }
   }
