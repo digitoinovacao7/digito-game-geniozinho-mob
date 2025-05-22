@@ -24,13 +24,13 @@ dependencies:
   percent_indicator: ^4.2.4
   auto_size_text: ^3.0.0
   flutter_switch: ^0.3.2
-  share_plus: ^10.1.4
+  share_plus: ^11.0.0
   flutter_email_sender: ^7.0.0
   url_launcher: ^6.3.1
   device_info_plus: ^11.3.3
   flutter_rating_bar: ^4.0.1
   footer: ^0.0.4
-  google_mobile_ads: ^5.3.1
+  google_mobile_ads: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +40,36 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.3
 
+flutter_launcher_icons:
+  android: "launcher_icon" # Specifies the name of the Android launcher icon resource
+  image_path: "assets/images/app_icon.png" # Path to your source icon image
+  min_sdk_android: 28 # Recommended for adaptive icons (Android 8.0+)
+
+  # Adaptive icon customization (Android)
+  adaptive_icon_background: "#ffffff" # Solid color background (or path to background image)
+  adaptive_icon_foreground: "assets/images/app_icon.png" # Path to foreground icon image
+
+  ios: true # Generates iOS launcher icons
+  # image_path_ios: "assets/images/app_icon_ios.png" # Optional: Specify a separate iOS icon (defaults to image_path)
+
+  # Optional: Web configuration (if needed)
+  # web:
+  #   generate: true
+  #   image_path: "assets/images/app_icon_web.png"
+  #   background_color: "#ffffff"
+  #   theme_color: "#ffffff"
+
+  # Optional: Windows configuration (if needed)
+  # windows:
+  #   generate: true
+  #   image_path: "assets/images/app_icon_windows.png"
+  #   icon_size: 48
+
+  # Optional: macOS configuration (if needed)
+  # macos:
+  #   generate: true
+  #   image_path: "assets/images/app_icon_macos.png"
+
 flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
@@ -48,6 +78,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/icon/icon.png # If you are using only this image.
+    - assets/icon/ # If you want to use all images inside the icon folder.
     - assets/images/
     - assets/imgYellow/
     - assets/imgGreen/

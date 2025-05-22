@@ -177,8 +177,8 @@ class _DashboardViewState extends State<DashboardView>
                         ),
                         getFooterWidget(
                             context,
-                            'Copyright © ${DateTime.now().year} Dígito Inovação e Tecnologia LTDA',
-                            "https://digitoinovacao.com.br/")
+                            'Copyright © ${DateTime.now().year} Geniozinho',
+                            "https://geniozinho.com.br/")
                       ],
                     ),
                   ),
