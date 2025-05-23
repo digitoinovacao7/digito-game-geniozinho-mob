@@ -36,18 +36,7 @@ class _SplashViewState extends State<SplashView> {
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration:
-              BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor
-                  // gradient: SweepGradient(
-                  //   center: Alignment.center,
-                  //   startAngle: 0.0,
-                  //   endAngle: pi * 2,
-                  //   colors: [
-                  //     Color(0xff4895EF),
-                  //     Color(0xff3F37C9),
-                  //   ],
-                  //   transform: GradientRotation(pi / 2),
-                  // ),
-                  ),
+              BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -209,12 +209,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               childAspectRatio: _aspectRatio,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-
-                              // padding: EdgeInsets.only(
-                              //   left: getHorizontalSpace(context),
-                              //   right: getHorizontalSpace(context),
-                              //   bottom: getHorizontalSpace(context),
-                              // ),
                               crossAxisSpacing: _crossAxisSpacing,
                               mainAxisSpacing: _crossAxisSpacing,
                               primary: false,
@@ -323,7 +317,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         width: getWidthPercentSize(context, 60),
         height: cellHeight,
         margin: EdgeInsets.all(5),
-
         child: Stack(
           children: [
             Container(
@@ -353,22 +346,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             )
           ],
         ),
-        // child: Card(
-        //   color: tuple2.item1.primaryColor,
-        //   elevation: 1,
-        //   shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.all(
-        //         Radius.circular(radius),
-        //       )),
-        //   child: Center(
-        //     child:getTextWidget(Theme.of(context).textTheme.subtitle1!.copyWith(
-        //         fontWeight: FontWeight.w600
-        //     ),s,TextAlign.center,
-        //         getPercentSize(cellHeight, 25)
-        //     ),
-        //
-        //   ),
-        // )
       ),
       onTap: () {
         Navigator.pop(context);
@@ -394,7 +371,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     disposeBannerAd(adsFile);
   }

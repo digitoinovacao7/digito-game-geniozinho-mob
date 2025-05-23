@@ -1,4 +1,4 @@
-// import 'package:firebase_analytics/firebase_analytics.dart';
+//import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   final String fontFamily = "Montserrat";
-  // final FirebaseAnalytics firebaseAnalytics;
+  //final FirebaseAnalytics firebaseAnalytics;
 
   const MyApp({
-    // required this.firebaseAnalytics,
+    //required this.firebaseAnalytics,
     Key? key,
   }) : super(key: key);
 
