@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174614489763",
+    "project_id": "geniozinho-adf35",
+    "storage_bucket": "geniozinho-adf35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174614489763:android:aeb817139767a0f990ad16",
+        "android_client_info": {
+          "package_name": "br.com.digitoinovacao.geniozinho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcDInqNK6jffaez8my0c1V3p7CRuBWTk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
