@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/data/models/game_info_dialog.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:geniozinho/src/utility/dialog_info_util.dart';
 
 class CommonInfoDialogView extends StatelessWidget {

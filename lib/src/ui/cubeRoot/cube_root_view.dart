@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 import '../../data/models/cube_root.dart';
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 import '../common/common_main_widget.dart';
 import '../common/common_vertical_button.dart';
 import 'cube_root_provider.dart';

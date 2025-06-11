@@ -7,7 +7,7 @@ import 'package:geniozinho/src/ui/common/dialog_listener.dart';
 import 'package:geniozinho/src/ui/model/gradient_model.dart';
 import 'package:geniozinho/src/ui/numberPyramid/number_pyramid_provider.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';

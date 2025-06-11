@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:geniozinho/src/data/RandomFindMissingData.dart';
@@ -19,8 +18,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   MobileAds.instance.initialize();
-
-  if (kDebugMode) {}
   final sharedPreferences = await SharedPreferences.getInstance();
 
   print("va===${getFormattedString(19.2)}");

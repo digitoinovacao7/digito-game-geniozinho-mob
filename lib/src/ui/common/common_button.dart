@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geniozinho/src/core/color_scheme.dart';
 import 'package:geniozinho/src/ui/common/common_tab_animation_view.dart';
 import 'package:geniozinho/src/ui/soundPlayer/audio_file.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 
 class CommonButton extends StatelessWidget {
   final Function onTab;

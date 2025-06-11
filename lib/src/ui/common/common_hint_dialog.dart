@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/resizer/widget_utils.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../ads/AdsFile.dart';

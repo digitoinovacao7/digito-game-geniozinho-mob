@@ -7,7 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/resizer/fetch_pixels.dart';
 import 'package:geniozinho/src/ui/resizer/widget_utils.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 
 import '../core/app_assets.dart';
 

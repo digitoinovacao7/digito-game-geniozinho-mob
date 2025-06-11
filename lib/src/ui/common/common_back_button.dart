@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/ui/common/common_tab_animation_view.dart';
 
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 import '../soundPlayer/audio_file.dart';
 
 class CommonBackButton extends StatelessWidget {

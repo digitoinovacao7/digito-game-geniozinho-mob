@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:geniozinho/src/data/models/dashboard.dart';
 import 'package:geniozinho/src/ui/dashboard/dashboard_button_view.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 

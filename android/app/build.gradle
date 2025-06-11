@@ -45,13 +45,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true  // Habilite para builds de release
-            shrinkResources true // Habilite para builds de release
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
-            // Builds de debug geralmente não precisam de minificação ou assinatura complexa
             signingConfig signingConfigs.debug
         }
     }

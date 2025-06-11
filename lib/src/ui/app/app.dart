@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         title: 'Gêniozinho',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        darkTheme: AppTheme.darkTheme,
+        darkTheme: AppTheme.theme,
         themeMode: themeMode,
         initialRoute: KeyUtil.splash,
         routes: appRoutes,

@@ -3,7 +3,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/common/common_score_widget.dart';
 import 'package:geniozinho/src/ui/dashboard/dashboard_view.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../ads/AdsFile.dart';

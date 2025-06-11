@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/ui/magicTriangle/magic_triangle_provider.dart';
 import 'package:geniozinho/src/ui/magicTriangle/triangle_input_button.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 

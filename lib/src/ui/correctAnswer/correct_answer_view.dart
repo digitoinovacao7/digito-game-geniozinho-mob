@@ -12,7 +12,7 @@ import 'package:geniozinho/src/ui/model/gradient_model.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 import '../common/common_main_widget.dart';
 import '../common/common_neumorphic_view.dart';
 import '../common/common_vertical_button.dart';

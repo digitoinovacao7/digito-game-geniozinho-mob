@@ -3,7 +3,6 @@ import 'dart:math';
 import 'models/find_missing_model.dart';
 import 'package:intl/intl.dart';
 
-
 class RandomFindMissingData {
   int levelNo = 0;
   int firstDigit = 0;
@@ -24,41 +23,41 @@ class RandomFindMissingData {
   int helpTag = 0;
   double digit_1 = 0, digit_2 = 0, digit_3 = 0, digit_4 = 0;
   FindMissingQuizModel quizModel = new FindMissingQuizModel();
-  String currentSign="+";
+  String currentSign = "+";
 
-  RandomFindMissingData(  int levelNo) {
+  RandomFindMissingData(int levelNo) {
     this.levelNo = levelNo;
     if (levelNo <= 5) {
       dataTypeNumber = 1;
-    }else if (levelNo > 5 && levelNo <= 20) {
+    } else if (levelNo > 5 && levelNo <= 20) {
       dataTypeNumber = 2;
     } else if (levelNo > 20 && levelNo <= 30) {
       dataTypeNumber = 3;
     }
 
-      additionSign = "+";
-      multiplicationSign = "*";
-      divisionSign = "/";
-      subtractionSign = "-";
-      space = "\u0020";
+    additionSign = "+";
+    multiplicationSign = "*";
+    divisionSign = "/";
+    subtractionSign = "-";
+    space = "\u0020";
   }
 
   FindMissingQuizModel getMethods() {
     quizModel = new FindMissingQuizModel();
 
     int i = new Random().nextInt((4 - 1) + 1) + 1;
-    currentSign=additionSign!;
-    if (i ==1 ) {
-      currentSign=additionSign!;
+    currentSign = additionSign!;
+    if (i == 1) {
+      currentSign = additionSign!;
       return getAddition();
-    } else if (i==2) {
-      currentSign=subtractionSign!;
+    } else if (i == 2) {
+      currentSign = subtractionSign!;
       return getSubtraction();
-    } else if (i==3) {
-      currentSign=multiplicationSign!;
+    } else if (i == 3) {
+      currentSign = multiplicationSign!;
       return getMultiplication();
     } else if (i == 4) {
-      currentSign=divisionSign!;
+      currentSign = divisionSign!;
       return getDivision();
     }
     return getAddition();
@@ -66,33 +65,33 @@ class RandomFindMissingData {
 
   int getFirstMinNumber() {
     int number = 30;
-    if(dataTypeNumber == 1){
+    if (dataTypeNumber == 1) {
       number = 10;
-    }else if(dataTypeNumber==2){
+    } else if (dataTypeNumber == 2) {
       number = 150;
     }
 
     return number;
   }
+
   int getFirstMaxNumber() {
     int number = 50;
 
-
-    if(dataTypeNumber == 1){
+    if (dataTypeNumber == 1) {
       number = 50;
-    }else if(dataTypeNumber==2){
+    } else if (dataTypeNumber == 2) {
       number = 200;
     }
 
     return number;
   }
+
   int getSecondMaxNumber() {
     int number = 150;
 
-
-    if(dataTypeNumber == 1){
+    if (dataTypeNumber == 1) {
       number = 100;
-    }else if(dataTypeNumber==2){
+    } else if (dataTypeNumber == 2) {
       number = 250;
     }
 
@@ -102,16 +101,13 @@ class RandomFindMissingData {
   int getSecondMinNumber() {
     int number = 150;
 
-
-    if(dataTypeNumber == 1){
+    if (dataTypeNumber == 1) {
       number = 50;
-    }else if(dataTypeNumber==2){
+    } else if (dataTypeNumber == 2) {
       number = 200;
     }
     return number;
   }
-
-
 
   FindMissingQuizModel getAddition() {
     int firstMin = getFirstMinNumber();
@@ -150,8 +146,6 @@ class RandomFindMissingData {
     quizModel.question = question;
     return quizModel;
   }
-
-
 
   FindMissingQuizModel getSubtraction() {
     if (dataTypeNumber == 1) {
@@ -262,15 +256,13 @@ class RandomFindMissingData {
           " " +
           secondDoubleDigit.toInt().toString() +
           " = " +
-          getFormattedString(
-              (firstDoubleDigit / secondDoubleDigit));
+          getFormattedString((firstDoubleDigit / secondDoubleDigit));
     } else if (helpTag == 2) {
       question = firstDoubleDigit.toInt().toString() +
           " " +
           currentSign +
           " ? = " +
-          getFormattedString(
-              (firstDoubleDigit / secondDoubleDigit));
+          getFormattedString((firstDoubleDigit / secondDoubleDigit));
     } else {
       question = firstDoubleDigit.toInt().toString() +
           " " +
@@ -282,12 +274,6 @@ class RandomFindMissingData {
     quizModel.question = question;
     return quizModel;
   }
-
-
-
-
-
-
 
   void addModel() {
     helpTag = new Random().nextInt(3) + 1;
@@ -396,12 +382,13 @@ class RandomFindMissingData {
     quizModel.question = question;
   }
 }
+
 List shuffle(List items) {
   var random = new Random();
 
   // Go through all elements.
   for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
+    var n = random.nextInt(i + 1);
 
     var temp = items[i];
     items[i] = items[n];
@@ -410,12 +397,9 @@ List shuffle(List items) {
 
   return items;
 }
-String getFormattedString(double d){
 
+String getFormattedString(double d) {
   NumberFormat numberFormat = NumberFormat(".00", "en_US");
-
-
-
   return numberFormat.format(d);
   // return d.toStringAsPrecision(4);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/data/models/correct_answer.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 
 class CorrectAnswerQuestionView extends StatelessWidget {
   final Question question;

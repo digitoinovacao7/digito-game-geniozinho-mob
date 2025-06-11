@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 
 class CommonAlertOverDialog extends AlertDialog {
   final Widget child;

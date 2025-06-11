@@ -13,7 +13,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 import '../../data/models/true_false_model.dart';
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 import '../common/common_button.dart';
 import '../common/common_main_widget.dart';
 

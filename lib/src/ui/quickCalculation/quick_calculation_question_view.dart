@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/data/models/quick_calculation.dart';
 
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 
 class QuickCalculationQuestionView extends StatefulWidget {
   final QuickCalculation currentState;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geniozinho/src/ui/common/common_tab_animation_view.dart';
 import 'package:geniozinho/src/ui/model/gradient_model.dart';
 import 'package:geniozinho/src/ui/soundPlayer/audio_file.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:tuple/tuple.dart';
 
 class CommonNumberButton extends StatelessWidget {

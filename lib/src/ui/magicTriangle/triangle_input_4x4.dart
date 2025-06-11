@@ -5,7 +5,7 @@ import 'package:geniozinho/src/ui/magicTriangle/triangle_button.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 
 class TriangleInput4x4 extends StatelessWidget {
   final Tuple2<Color, Color> colorTuple;

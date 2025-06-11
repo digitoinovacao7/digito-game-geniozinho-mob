@@ -9,7 +9,7 @@ import 'package:geniozinho/src/ui/common/rate_dialog_view.dart';
 import 'package:geniozinho/src/ui/model/gradient_model.dart';
 import 'package:geniozinho/src/ui/resizer/fetch_pixels.dart';
 import 'package:geniozinho/src/ui/resizer/widget_utils.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 

@@ -9,7 +9,7 @@ import 'package:tuple/tuple.dart';
 import '../../ads/AdsFile.dart';
 import '../../core/app_assets.dart';
 import '../../core/app_constant.dart';
-import '../../utility/Constants.dart';
+import '../../utility/constants.dart';
 import '../app/theme_provider.dart';
 import '../model/gradient_model.dart';
 

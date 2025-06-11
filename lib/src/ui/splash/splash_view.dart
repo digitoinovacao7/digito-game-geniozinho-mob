@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geniozinho/src/core/app_assets.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/splash/animated_grid_item_view.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:tuple/tuple.dart';
 
 class SplashView extends StatefulWidget {

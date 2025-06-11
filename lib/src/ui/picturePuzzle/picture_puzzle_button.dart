@@ -3,7 +3,7 @@ import 'package:geniozinho/src/data/models/picture_puzzle.dart';
 import 'package:geniozinho/src/ui/picturePuzzle/circle_shape.dart';
 import 'package:geniozinho/src/ui/picturePuzzle/picture_puzzle_answer_button.dart';
 import 'package:geniozinho/src/ui/picturePuzzle/square_shape.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:tuple/tuple.dart';
 import 'triangle_shape.dart';
 

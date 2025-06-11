@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geniozinho/src/data/models/math_pairs.dart';
 import 'package:geniozinho/src/ui/concentration/concentration_provider.dart';
-import 'package:geniozinho/src/utility/Constants.dart';
+import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
