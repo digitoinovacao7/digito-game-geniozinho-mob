@@ -1020,7 +1020,7 @@ String rightSound = 'right.mp3';
 String wrongSound = 'wrong.mp3';
 String gameOverSound = 'gameover.mp3';
 
-String privacyURL = 'https://digitoinovacao.com.br/privacy-policy/';
+String privacyURL = 'https://geniozinho.com.br/politica-privacidade';
 
 setSound(bool rem) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
