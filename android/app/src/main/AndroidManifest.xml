@@ -9,7 +9,7 @@
     <application
         android:name="${applicationName}"
         android:label="Gêniozinho"
-        android:icon="@mipmap/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="false"  tools:targetApi="33">
 

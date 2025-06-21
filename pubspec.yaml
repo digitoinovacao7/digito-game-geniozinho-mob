@@ -41,23 +41,10 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.3
 
-flutter_launcher_icons:
-  android: "launcher_icon" # Specifies the name of the Android launcher icon resource
-  image_path: "assets/images/app_icon.png" # Path to your source icon image
-  min_sdk_android: 28 # Recommended for adaptive icons (Android 8.0+)
-
-  # Adaptive icon customization (Android)
-  adaptive_icon_background: "#ffffff" # Solid color background (or path to background image)
-  adaptive_icon_foreground: "assets/images/app_icon.png" # Path to foreground icon image
-
-  ios: true # Generates iOS launcher icons
-
 flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets/icon/icon.png
-    - assets/icon/
     - assets/images/
     - assets/imgYellow/
     - assets/imgGreen/
@@ -96,3 +83,10 @@ flutter:
           weight: 800
 flutter_intl:
   enabled: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/geniozinho_mascote.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/geniozinho_mascote.png"
