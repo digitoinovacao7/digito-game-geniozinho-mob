@@ -28,6 +28,7 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
+    final Color progressIndicatorColor = Theme.of(context).colorScheme.primary;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
@@ -41,9 +42,19 @@ class _SplashViewState extends State<SplashView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                AppAssets.splashIcon,
-                height: getScreenPercentSize(context, 30),
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(progressIndicatorColor),
+                // Opcional: definir o tamanho se necessário,
+                // mas geralmente ele se adapta bem ao contexto.
+                // Se precisar de um tamanho específico, envolva com SizedBox:
+                // SizedBox(
+                //   width: getScreenPercentSize(context, 15), // Ex: 15% da largura da tela
+                //   height: getScreenPercentSize(context, 15),
+                //   child: CircularProgressIndicator(
+                //     valueColor: AlwaysStoppedAnimation<Color>(progressIndicatorColor),
+                //     strokeWidth: 4.0, // Espessura do círculo
+                //   ),
+                // ),
               ),
               SizedBox(
                 height: getScreenPercentSize(context, 1.3),
