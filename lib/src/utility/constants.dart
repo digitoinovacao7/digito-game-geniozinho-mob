@@ -251,23 +251,52 @@ getHeaderWidget(BuildContext context, String title, String content,
   );
 }
 
-getFooterWidget(BuildContext context, String text, String url, {Color? color}) {
-  return Footer(
-    backgroundColor: Colors.transparent,
-    padding: EdgeInsets.all(20.0),
-    child: GestureDetector(
-      onTap: () async {
-        if (await canLaunchUrlString(url)) {
-          await launchUrlString(url);
-        } else {
-          throw 'Could not launch $url';
-        }
-      },
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Colors.orange,
-          decoration: TextDecoration.underline,
+Widget getFooterWidget(
+    BuildContext context,
+    String text, // O texto de copyright já virá formatado
+    String url, {
+      Color? textColor, // Cor opcional para o texto
+      EdgeInsets? padding,
+    }) {
+  final ThemeData theme = Theme.of(context);
+  final Color defaultTextColor = theme.textTheme.bodySmall?.color ?? theme.hintColor;
+  final effectiveTextColor = textColor ?? defaultTextColor;
+
+  return Padding(
+    padding: padding ?? EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 2), horizontal: getScreenPercentSize(context, 1)),
+    child: Center( // Centraliza o rodapé
+      child: InkWell( // InkWell para feedback visual ao tocar
+        onTap: () async {
+          if (await canLaunchUrlString(url)) {
+            await launchUrlString(url);
+          } else {
+            // Opcional: Mostrar um SnackBar ou logar um erro se não puder lançar a URL
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Não foi possível abrir o link: $url')),
+            );
+            debugPrint('Could not launch $url');
+          }
+        },
+        // Opcional: customizar o highlight e splash color
+        // highlightColor: theme.primaryColor.withOpacity(0.1),
+        // splashColor: theme.primaryColor.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(4), // Para que o splash fique contido
+        child: Padding( // Padding interno para o texto dentro do InkWell
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Text(
+            text, // Ex: "© 2023 Geniozinho. Todos os direitos reservados."
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith( // Usar um estilo de texto menor
+              color: effectiveTextColor,
+              // Opcional: Adicionar um leve sublinhado ou deixar sem
+              // textDecoration: TextDecoration.underline,
+              // textDecorationColor: effectiveTextColor.withOpacity(0.7),
+              // textDecorationStyle: TextDecorationStyle.dotted,
+            ) ?? TextStyle( // Fallback style
+              fontSize: 15.0,
+              color: effectiveTextColor,
+            ),
+          ),
         ),
       ),
     ),
