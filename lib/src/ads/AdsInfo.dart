@@ -3,7 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 AdRequest request = AdRequest(
   keywords: <String>['jogos', 'quebra-cabeça', 'crianças', 'educação'],
-  contentUrl: 'http://geniozinho.digitoinovacao.com.br',
+  contentUrl: 'https://geniozinho.com.br',
   nonPersonalizedAds: true,
 );
 
@@ -29,7 +29,7 @@ String getRewardBasedVideoAdUnitId() {
   if (Platform.isIOS) {
     return 'ca-app-pub-3940256099942544/1712485313';
   } else if (Platform.isAndroid) {
-    return 'ca-app-pub-3940256099942544/5224354917';
+    return 'ca-app-pub-3940256099942544/8691691433';
   }
   return "";
 }
