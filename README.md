@@ -19,3 +19,6 @@ Nossos jogos oferecem uma experiência única, combinando desafios mentais com a
 * Desenvolvimento da agilidade mental
 * Estímulo à criatividade
 * Fortalecimento da memória
+
+
+keytool -genkey -v -keystore geniozinho-key.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias androidapps

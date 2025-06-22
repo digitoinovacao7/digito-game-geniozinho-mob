@@ -14,7 +14,9 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "br.com.digitoinovacao.geniozinho"
     compileSdk = 35
-    ndkVersion = "27.0.12077973"
+    // Flutter 3.22 usa compileSdk 34 por padrão. 35 é para Android 15 (VanillaIceCream)
+    // Certifique-se de que seu ambiente está pronto para compileSdk 35 se mantiver.
+    ndkVersion = "27.0.12077973" // Verifique se esta versão é compatível/necessária
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -23,6 +25,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17
+        // Garanta que seu Kotlin Gradle Plugin e versão do Kotlin são compatíveis
     }
 
     signingConfigs {
@@ -32,13 +35,20 @@ android {
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
+            } else {
+                // É uma boa prática ter um fallback para debug ou definir explicitamente
+                // para evitar falhas se key.properties não for encontrado.
+                // Para builds de release, este build irá falhar se key.properties não existir.
+                // Isso é geralmente o comportamento desejado.
             }
         }
     }
+
     defaultConfig {
         applicationId = "br.com.digitoinovacao.geniozinho"
         minSdk = 28
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 34
+        // Recomenda-se usar targetSdk 34 com Flutter 3.22, a menos que você tenha um motivo para usar flutter.targetSdkVersion
         versionCode = 3
         versionName = "3.0"
         multiDexEnabled true
@@ -52,7 +62,25 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug // Se você definir a configuração de debug acima
+            // Caso contrário, ele usa o padrão
+        }
+    }
+
+    // ADICIONE ESTE BLOCO
+    bundle {
+        language {
+            // Habilita a divisão de APKs por idioma.
+            // Defina como true se quiser que a Play Store otimize downloads por idioma.
+            enableSplit = true
+        }
+        density {
+            // Habilita a divisão de APKs por densidade de tela.
+            enableSplit = true
+        }
+        abi {
+            // Habilita a divisão de APKs por ABI (arquitetura do processador).
+            enableSplit = true
         }
     }
 }
@@ -63,7 +91,9 @@ flutter {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.15.0')
+    // Verifique as versões mais recentes
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // $kotlin_version deve estar definido no build.gradle do projeto raiz
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.multidex:multidex:2.0.1'
 }
