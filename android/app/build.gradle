@@ -48,7 +48,6 @@ android {
         applicationId = "br.com.digitoinovacao.geniozinho"
         minSdk = 28
         targetSdkVersion 34
-        // Recomenda-se usar targetSdk 34 com Flutter 3.22, a menos que você tenha um motivo para usar flutter.targetSdkVersion
         versionCode = 3
         versionName = "3.0"
         multiDexEnabled true
