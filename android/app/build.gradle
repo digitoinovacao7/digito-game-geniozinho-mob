@@ -24,7 +24,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
+        jvmTarget = '17'
         // Garanta que seu Kotlin Gradle Plugin e versão do Kotlin são compatíveis
     }
 
