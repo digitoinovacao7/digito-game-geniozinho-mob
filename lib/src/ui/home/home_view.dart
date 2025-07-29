@@ -46,9 +46,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    super.initState();
+
     Future.delayed(Duration.zero, () {
       adsFile = new AdsFile(context);
-      adsFile!.createAnchoredBanner(context, setState);
+      adsFile!.createAnchoredBanner(context, () {
+        if (mounted) {
+          setState(() {});
+        }
+      });
     });
     tuple2 = widget.tuple2;
     isGamePageOpen = false;
@@ -118,7 +124,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         Tween(begin: -54.0, end: -240.0).animate(animationController);
 
     setState(() {});
-    super.initState();
   }
 
   @override

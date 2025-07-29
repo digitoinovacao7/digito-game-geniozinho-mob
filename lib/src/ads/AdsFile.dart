@@ -238,26 +238,20 @@ disposeBannerAd(AdsFile? adsFile) {
   }
 }
 
-showBanner(BuildContext context, AdsFile adsFile) {
-  return Container(
-    height: (getBannerAd(adsFile) != null)
-        ? getBannerAd(adsFile)!.size.height.toDouble()
-        : 0,
-    // color: Colors.black,
-    color: Theme.of(context).scaffoldBackgroundColor,
-    child: (getBannerAd(adsFile) != null)
-        ? AdWidget(ad: getBannerAd(adsFile)!)
-        : Container(),
-  );
+Widget showBanner(BuildContext context, AdsFile adsFile) {
+  final banner = getBannerAd(adsFile);
+  if (banner != null) {
+    return Container(
+      height: banner.size.height.toDouble(),
+      child: AdWidget(ad: banner),
+    );
+  }
+  return SizedBox.shrink();
 }
 
 BannerAd? getBannerAd(AdsFile? adsFile) {
-  BannerAd? _anchoredBanner;
-  if (adsFile != null) {
-    return (adsFile._anchoredBanner == null)
-        ? _anchoredBanner
-        : adsFile._anchoredBanner!;
-  } else {
-    return _anchoredBanner!;
+  if (adsFile != null && adsFile._anchoredBanner != null) {
+    return adsFile._anchoredBanner;
   }
+  return null;
 }
