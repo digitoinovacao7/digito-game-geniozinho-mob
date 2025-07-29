@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geniozinho/src/data/models/dashboard.dart';
@@ -23,6 +24,7 @@ class _DashboardViewState extends State<DashboardView>
   late Animation<Offset> _offsetLeftEnter;
   late Animation<Offset> _offsetRightEnter;
   late bool isHomePageOpen;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -46,8 +48,18 @@ class _DashboardViewState extends State<DashboardView>
 
   @override
   void dispose() {
+    _audioPlayer.dispose();
     super.dispose();
     _controller.dispose();
+  }
+
+  Future<void> _playClickSound() async {
+    try {
+      await _audioPlayer.play(AssetSource('tick.mp3'));
+      print("Música tocada com sucesso");
+    } catch (e) {
+      print("Erro ao tocar música: $e");
+    }
   }
 
   void exitApp() {
@@ -61,136 +73,139 @@ class _DashboardViewState extends State<DashboardView>
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
-
     double margin = getHorizontalSpace(context);
     double verticalSpace = getScreenPercentSize(context, 3);
-
-    ThemeProvider themeProvider = Provider.of(context);
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     setStatusBarColor(Theme.of(context).scaffoldBackgroundColor);
 
     return WillPopScope(
-        child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-            systemNavigationBarIconBrightness: Theme.of(context).brightness,
-          ),
-          child: Scaffold(
-            appBar: getNoneAppBar(context),
-            body: SafeArea(
-              bottom: true,
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: margin),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: getVerticalSpace(context)),
-                        // getVerticalSpace(context),
-                        // SizedBox(height: FetchPixels.getPixelHeight(40),),
+      onWillPop: () async {
+        exitApp();
+        return false;
+      },
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarIconBrightness: Theme.of(context).brightness,
+        ),
+        child: Scaffold(
+          appBar: getNoneAppBar(context),
+          body: Stack(
+            // <--- ENVOLVENDO O BODY COM STACK
+            fit: StackFit.expand, // Para a imagem de fundo preencher
+            children: <Widget>[
+              // IMAGEM DE FUNDO
+              Image.asset(
+                'assets/images/background_dashboard.png',
+                fit: BoxFit.cover,
+              ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: getScoreWidget(context),
-                              flex: 1,
-                            ),
-                            getSettingWidget(context),
-                          ],
-                        ),
-                        SizedBox(height: getVerticalSpace(context)),
-                        // SizedBox(height: getScreenPercentSize(context, 3),),
-
-                        getHeaderWidget(context, 'Gêniozinho',
-                            'Treine seu cérebro, melhore sua habilidade matemática'),
-
-                        SizedBox(
-                          height: getScreenPercentSize(context, 5),
-                        ),
-                        //SizedBox(height: FetchPixels.getPixelHeight(120)),
-
-                        Expanded(
-                          child: NotificationListener<
-                              OverscrollIndicatorNotification>(
-                            onNotification:
-                                (OverscrollIndicatorNotification overscroll) {
-                              overscroll.disallowIndicator();
-                              return true;
-                            },
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  DashboardButtonView(
-                                    dashboard: KeyUtil.dashboardItems[0],
-                                    position: _offsetLeftEnter,
-                                    margin: margin,
-                                    onTab: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        KeyUtil.home,
-                                        ModalRoute.withName(KeyUtil.dashboard),
-                                        arguments: Tuple2(
-                                            getItem(0, themeProvider),
-                                            MediaQuery.of(context).padding.top),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(height: verticalSpace),
-                                  DashboardButtonView(
-                                    dashboard: KeyUtil.dashboardItems[1],
-                                    position: _offsetRightEnter,
-                                    margin: margin,
-                                    onTab: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        KeyUtil.home,
-                                        ModalRoute.withName(KeyUtil.dashboard),
-                                        arguments: Tuple2(
-                                            getItem(1, themeProvider),
-                                            MediaQuery.of(context).padding.top),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(height: verticalSpace),
-                                  DashboardButtonView(
-                                    dashboard: KeyUtil.dashboardItems[2],
-                                    position: _offsetLeftEnter,
-                                    margin: margin,
-                                    onTab: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        KeyUtil.home,
-                                        ModalRoute.withName(KeyUtil.dashboard),
-                                        arguments: Tuple2(
-                                            getItem(2, themeProvider),
-                                            MediaQuery.of(context).padding.top),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+              // SEU CONTEÚDO ORIGINAL
+              SafeArea(
+                bottom: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: margin),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: getVerticalSpace(context)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: getScoreWidget(context),
+                            flex: 1,
+                          ),
+                          getSettingWidget(context),
+                        ],
+                      ),
+                      SizedBox(height: getVerticalSpace(context)),
+                      getHeaderWidget(context, 'Gêniozinho',
+                          'Treine seu cérebro, melhore sua habilidade matemática'),
+                      SizedBox(
+                        height: getScreenPercentSize(context, 5),
+                      ),
+                      Expanded(
+                        child: NotificationListener<
+                            OverscrollIndicatorNotification>(
+                          onNotification:
+                              (OverscrollIndicatorNotification overscroll) {
+                            overscroll.disallowIndicator();
+                            return true;
+                          },
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                DashboardButtonView(
+                                  dashboard: KeyUtil.dashboardItems[0],
+                                  position: _offsetLeftEnter,
+                                  margin: margin,
+                                  onTab: () {
+                                    _playClickSound();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      KeyUtil.home,
+                                      ModalRoute.withName(KeyUtil.dashboard),
+                                      arguments: Tuple2(
+                                          getItem(0, themeProvider),
+                                          MediaQuery.of(context).padding.top),
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: verticalSpace),
+                                DashboardButtonView(
+                                  dashboard: KeyUtil.dashboardItems[1],
+                                  position: _offsetRightEnter,
+                                  margin: margin,
+                                  onTab: () {
+                                    _playClickSound();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      KeyUtil.home,
+                                      ModalRoute.withName(KeyUtil.dashboard),
+                                      arguments: Tuple2(
+                                          getItem(1, themeProvider),
+                                          MediaQuery.of(context).padding.top),
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: verticalSpace),
+                                DashboardButtonView(
+                                  dashboard: KeyUtil.dashboardItems[2],
+                                  position: _offsetLeftEnter,
+                                  margin: margin,
+                                  onTab: () {
+                                    _playClickSound();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      KeyUtil.home,
+                                      ModalRoute.withName(KeyUtil.dashboard),
+                                      arguments: Tuple2(
+                                          getItem(2, themeProvider),
+                                          MediaQuery.of(context).padding.top),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        getFooterWidget(
-                            context,
-                            '© ${DateTime.now().year} Geniozinho. Todos os direitos reservados.',
-                            "https://geniozinho.com.br/")
-                      ],
-                    ),
+                      ),
+                      getFooterWidget(
+                          context,
+                          '© ${DateTime.now().year} Geniozinho. Todos os direitos reservados.',
+                          "https://geniozinho.com.br/")
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
-        onWillPop: () async {
-          exitApp();
-          return false;
-        });
+      ),
+    );
   }
 
   Dashboard getItem(int i, ThemeProvider themeProvider) {

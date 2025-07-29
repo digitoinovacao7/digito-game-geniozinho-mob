@@ -41,18 +41,8 @@ class _SplashViewState extends State<SplashView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(progressIndicatorColor),
-                // Opcional: definir o tamanho se necessário,
-                // mas geralmente ele se adapta bem ao contexto.
-                // Se precisar de um tamanho específico, envolva com SizedBox:
-                // SizedBox(
-                //   width: getScreenPercentSize(context, 15), // Ex: 15% da largura da tela
-                //   height: getScreenPercentSize(context, 15),
-                //   child: CircularProgressIndicator(
-                //     valueColor: AlwaysStoppedAnimation<Color>(progressIndicatorColor),
-                //     strokeWidth: 4.0, // Espessura do círculo
-                //   ),
-                // ),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(progressIndicatorColor),
               ),
               SizedBox(
                 height: getScreenPercentSize(context, 1.3),
@@ -65,16 +55,6 @@ class _SplashViewState extends State<SplashView> {
                   getScreenPercentSize(context, 5.3))
             ],
           ),
-          // child: ListView.builder(
-          //   shrinkWrap: true,
-          //   itemCount: horizontalLine,
-          //   physics: NeverScrollableScrollPhysics(),
-          //   itemBuilder: (context, index) => GridItemView(
-          //     index: index,
-          //     horizontalLine: horizontalLine,
-          //     verticalLine: verticalLine,
-          //   ),
-          // ),
         ),
       ),
     );

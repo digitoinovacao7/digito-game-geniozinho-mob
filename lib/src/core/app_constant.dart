@@ -80,6 +80,9 @@ class KeyUtil {
   static Color primaryColor3 = "#C3AEFF".toColor();
   static Color bgColor3 = "#EFEBFE".toColor();
   static Color blackTransparentColor = "#BF000000".toColor();
+  static Color bgColorOrange = "#FFF3E0".toColor(); // Um laranja bem pálido
+  static Color backgroundColorOrange = "#FFE0B2".toColor(); // Um laranja um pouco mais saturado
+  static Color primaryColorOrange = "#fd8f18".toColor();
   static String themeYellowFolder = 'imgYellow/';
   static String themeOrangeFolder = 'imgGreen/';
   static String themeBlueFolder = 'imgBlue/';
@@ -87,7 +90,7 @@ class KeyUtil {
   static List<Dashboard> dashboardItems = [
     Dashboard(
         puzzleType: PuzzleType.MATH_PUZZLE,
-        colorTuple: Tuple2(Color(0xff4895EF), Color(0xff3f37c9)),
+        colorTuple: Tuple2(primaryColorOrange, "#FFF3E0".toColor()),
         opacity: 0.07,
         outlineIcon: AppAssets.icMathPuzzleOutline,
         subtitle: "Cada jogo com cálculo simples e abordagem diferente.",
@@ -99,7 +102,7 @@ class KeyUtil {
         bgColor: bgColor1,
         backgroundColor: backgroundColor1,
         folder: themeYellowFolder,
-        primaryColor: primaryColor1),
+        primaryColor: primaryColorOrange),
     Dashboard(
         position: 1,
         backgroundColor: backgroundColor2,
