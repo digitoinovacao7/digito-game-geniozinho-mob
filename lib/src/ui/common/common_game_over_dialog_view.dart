@@ -53,7 +53,7 @@ class CommonGameOverDialogView extends StatelessWidget {
       star = 3;
     }
 
-   debugPrint("start---$star");
+    debugPrint("start---$star");
 
     return CommonScoreWidget(
       context: context,
@@ -106,8 +106,7 @@ class CommonGameOverDialogView extends StatelessWidget {
   }
 
   share() async {
-    await Share.share(
-         'Sua maior pontuação é $score\n ${getAppLink()}',
+    await Share.share('Sua maior pontuação é $score\n ${getAppLink()}',
         subject: 'Gêniozinho');
   }
 }

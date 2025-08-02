@@ -77,7 +77,7 @@ class _DashboardViewState extends State<DashboardView>
     double verticalSpace = getScreenPercentSize(context, 3);
     // ThemeProvider is fetched but not directly used in getItem's corrected logic
     // It might be used elsewhere or by child widgets implicitly.
-    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    //ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     setStatusBarColor(Theme.of(context).scaffoldBackgroundColor);
 

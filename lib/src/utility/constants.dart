@@ -5,7 +5,6 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:footer/footer.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/app/game_provider.dart';
 import 'package:geniozinho/src/ui/app/theme_provider.dart';
