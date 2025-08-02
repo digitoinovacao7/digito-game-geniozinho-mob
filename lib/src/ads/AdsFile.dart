@@ -1,13 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import 'AdsInfo.dart';
+import 'ads_interface.dart';
 
-class AdsFile {
+class AdsFile implements AdsInterfaces {
   BuildContext? context;
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
+
+  int _numInterstitialLoadAttempts = 0;
+  int _numRewardedLoadAttempts = 0;
+  static const int _maxFailedLoadAttempts = 3;
 
   AdsFile(BuildContext c) {
     context = c;
@@ -21,8 +25,19 @@ class AdsFile {
 
   BannerAd? _anchoredBanner;
 
-  Future<void> createAnchoredBanner(BuildContext context, var setState,
-      {Function? function}) async {
+  @override
+  void onAdLoad(InterstitialAd interstitialAds) {
+    print("AdsInterfaces: Interstitial Ad Loaded: ${interstitialAds.adUnitId}");
+  }
+
+  @override
+  void onAdClose() {
+    print("AdsInterfaces: Interstitial Ad Closed.");
+  }
+
+  // MODIFICADO: Apenas um callback nomeado VoidCallback? onBannerAdLoaded
+  Future<void> createAnchoredBanner(BuildContext context,
+      {VoidCallback? onBannerAdLoaded}) async {
     final AnchoredAdaptiveBannerAdSize? size =
         await AdSize.getAnchoredAdaptiveBannerAdSize(
       Orientation.portrait,
@@ -33,6 +48,8 @@ class AdsFile {
       print('Unable to get height of anchored banner.');
       return;
     }
+    print('Banner Ad Unit ID: ${getBannerAdUnitId()}');
+    print('Banner size acquired: ${size.width}x${size.height}');
 
     final BannerAd banner = BannerAd(
       size: size,
@@ -41,11 +58,9 @@ class AdsFile {
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           print('$BannerAd loaded.');
-          setState(() {
-            _anchoredBanner = ad as BannerAd?;
-          });
-          if (function != null) {
-            function();
+          _anchoredBanner = ad as BannerAd?; // Definir _anchoredBanner AQUI
+          if (onBannerAdLoaded != null) {
+            onBannerAdLoaded(); // Chamar o callback para home_view.dart
           }
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
@@ -57,7 +72,6 @@ class AdsFile {
       ),
     );
     return banner.load();
-    // }
   }
 
   void disposeInterstitialAd() {
@@ -78,12 +92,11 @@ class AdsFile {
     }
   }
 
-  void showInterstitialAd(Function function) {
+  // DENTRO DA CLASSE AdsFile
+  void showInterstitialAd(Function function) { // 'function' é o seu callback de navegação
     if (_interstitialAd == null) {
       print('Warning: attempt to show interstitial before loaded.');
-
-      function();
-
+      function(); // Navega se o anúncio não estiver carregado
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -91,24 +104,28 @@ class AdsFile {
           print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         print('$ad onAdDismissedFullScreenContent.');
+        onAdClose(); // Chamada para a interface AdsInterfaces
         ad.dispose();
-        function();
+        _interstitialAd = null;
+        createInterstitialAd(); // Pré-carrega o próximo anúncio
+        function(); // Navega após o anúncio ser dispensado
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
         print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
-        createInterstitialAd();
+        _interstitialAd = null;
+        createInterstitialAd(); // Pré-carrega o próximo anúncio
+        function(); // <<< ADICIONAR ESTA LINHA PARA NAVEGAR MESMO SE A EXIBIÇÃO FALHAR
       },
     );
     _interstitialAd!.show();
-    _interstitialAd = null;
   }
+
 
   void showRewardedAd(Function function, Function function1) async {
     bool _isRewarded = false;
     if (_rewardedAd == null) {
       function1();
-      // showToast(S.of(context!).videoError);
       print('Warning: attempt to show rewarded before loaded.');
       return;
     }
@@ -118,7 +135,8 @@ class AdsFile {
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
-
+        _rewardedAd = null;
+        createRewardedAd();
         if (_isRewarded) {
           function();
         } else {
@@ -128,24 +146,21 @@ class AdsFile {
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
         print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
+        _rewardedAd = null;
+        createRewardedAd();
       },
     );
 
-    // _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
-    //   _isRewarded = true;
-    //   print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
-    // });
-
     _rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
       _isRewarded = true;
-      _rewardedAd = null;
-      // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
     });
   }
 
   void createRewardedAd() {
-    // if(!isAppPurchased ) {
+    if (_rewardedAd != null) return;
+
     RewardedAd.load(
         adUnitId: getRewardBasedVideoAdUnitId(),
         request: request,
@@ -153,41 +168,58 @@ class AdsFile {
           onAdLoaded: (RewardedAd ad) {
             print('reward====$ad loaded.');
             _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('RewardedAd failed to load: $error');
             _rewardedAd = null;
-            createRewardedAd();
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts <= _maxFailedLoadAttempts) {
+              int retryDelay =
+                  Duration(seconds: 2 * _numRewardedLoadAttempts).inSeconds;
+              print(
+                  'Retrying RewardedAd in $retryDelay seconds (attempt $_numRewardedLoadAttempts)');
+              Future.delayed(Duration(seconds: retryDelay), () {
+                createRewardedAd();
+              });
+            } else {
+              print('Max RewardedAd load attempts reached.');
+            }
           },
         ));
   }
 
   void createInterstitialAd() {
-    // if(!isAppPurchased  ) {
-    // if(!isAppPurchased  && isAdsPermission) {
+    if (_interstitialAd != null) return;
+
     InterstitialAd.load(
         adUnitId: getInterstitialAdUnitId(),
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
             print('$ad loaded');
-            print('failed==== true');
-
             _interstitialAd = ad;
+            _numInterstitialLoadAttempts = 0;
+            onAdLoad(ad);
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error.');
-            // _numInterstitialLoadAttempts += 1;
             _interstitialAd = null;
-            print('failed==== loaded');
-
-            // if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
-            createInterstitialAd();
-            // }
+            _numInterstitialLoadAttempts += 1;
+            if (_numInterstitialLoadAttempts <= _maxFailedLoadAttempts) {
+              int retryDelay =
+                  Duration(seconds: 2 * _numInterstitialLoadAttempts).inSeconds;
+              print(
+                  'Retrying InterstitialAd in $retryDelay seconds (attempt $_numInterstitialLoadAttempts)');
+              Future.delayed(Duration(seconds: retryDelay), () {
+                createInterstitialAd();
+              });
+            } else {
+              print('Max InterstitialAd load attempts reached.');
+            }
           },
         ));
   }
-// }
 }
 
 getBanner(BuildContext context, AdsFile? adsFile) {
@@ -207,6 +239,10 @@ showRewardedAd(AdsFile? adsFile, Function function, {Function? function1}) {
         function1();
       }
     });
+  } else {
+    if (function1 != null) {
+      function1();
+    }
   }
 }
 
@@ -241,10 +277,16 @@ disposeBannerAd(AdsFile? adsFile) {
 Widget showBanner(BuildContext context, AdsFile adsFile) {
   final banner = getBannerAd(adsFile);
   if (banner != null) {
+    print(
+        'AdsFile - showBanner: Banner is not null. Height: ${banner.size.height}');
     return Container(
+      color: Colors.yellow, // MANTENHA PARA TESTE VISUAL
+      alignment: Alignment.center,
       height: banner.size.height.toDouble(),
       child: AdWidget(ad: banner),
     );
+  } else {
+    print('AdsFile - showBanner: Banner is NULL.');
   }
   return SizedBox.shrink();
 }

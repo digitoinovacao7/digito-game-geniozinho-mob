@@ -5,13 +5,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 AdRequest request = AdRequest(
   keywords: <String>['jogos', 'quebra-cabeça', 'crianças', 'educação'],
   contentUrl: 'https://geniozinho.com.br',
-  // Considerar o consentimento do usuário para nonPersonalizedAds
-  // Para GDPR, você pode precisar torná-lo dinâmico com base no consentimento.
-  // Veja o plugin UMP (User Messaging Platform) do Google.
   nonPersonalizedAds: true,
 );
 
-// --- IDs de Produção ---
 // ANDROID
 const String _androidProductionInterstitialId = "ca-app-pub-9124633416063149/6643124577";
 const String _androidProductionBannerId = "ca-app-pub-9124633416063149/8913865007";

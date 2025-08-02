@@ -49,8 +49,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     super.initState();
 
     Future.delayed(Duration.zero, () {
-      adsFile = new AdsFile(context);
-      adsFile!.createAnchoredBanner(context, () {
+      adsFile = AdsFile(context);
+      adsFile!.createAnchoredBanner(context, onBannerAdLoaded: () {
+        print(
+            'HomeView: Banner ad loaded in AdsFile. Calling setState if mounted: $mounted');
         if (mounted) {
           setState(() {});
         }
