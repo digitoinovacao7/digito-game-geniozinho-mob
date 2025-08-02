@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:geniozinho/src/data/RandomFindMissingData.dart';
+import 'package:geniozinho/src/data/RandomFindMissingData.dart'; // Unused import?
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:geniozinho/src/ui/app/app.dart';
 import 'package:geniozinho/src/ui/app/coin_provider.dart';
@@ -20,7 +20,7 @@ Future<void> main() async {
   MobileAds.instance.initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  print("va===${getFormattedString(19.2)}");
+  debugPrint("va===${getFormattedString(19.2)}");
 
   setupServiceLocator(sharedPreferences);
   runApp(
@@ -37,7 +37,7 @@ Future<void> main() async {
           create: (context) => GetIt.I.get<CoinProvider>(),
         ),
       ],
-      child: MyApp(),
+      child: MyApp(), // Can MyApp be const?
     ),
   );
 }

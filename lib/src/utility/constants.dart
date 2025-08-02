@@ -338,17 +338,17 @@ getDefaultIconWidget(BuildContext context,
     bool? changeFolderName}) {
   double size = getScreenPercentSize(context, 3.5);
 
-  print("folderName====$folder");
+ debugPrint("folderName====$folder");
 
   if (folder != null && changeFolderName == null) {
     folder = getFolderName(context, folder);
 
-    print("folderqw---$folder---$icon");
+   debugPrint("folderqw---$folder---$icon");
   } else {
     folder = AppAssets.assetFolderPath + folder!;
   }
 
-  print("folder====$folder---$icon");
+ debugPrint("folder====$folder---$icon");
   return InkWell(
     onTap: () {
       if (function != null) {

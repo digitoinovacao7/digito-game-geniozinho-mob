@@ -88,7 +88,7 @@ class TrueFalseView extends StatelessWidget {
                           return Selector<TrueFalseProvider, TrueFalseModel>(
                               selector: (p0, p1) => p1.currentState,
                               builder: (context, currentState, child) {
-                                print("valueG===true");
+                               debugPrint("valueG===true");
 
                                 return Container(
                                   margin: EdgeInsets.symmetric(

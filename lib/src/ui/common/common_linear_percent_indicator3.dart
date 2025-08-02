@@ -43,7 +43,7 @@ class CommonLinearPercentIndicator<T extends GameProvider>
       ),
     );
 
-    // print("model====${model.animation.value}");
+    //debugPrint("model====${model.animation.value}");
     // return AnimatedBuilder(
     //   animation: model.animation,
     //   builder: (context, child) {
@@ -53,7 +53,7 @@ class CommonLinearPercentIndicator<T extends GameProvider>
     //     double settotal=100;
     //     int percentage = ((settotal*v)/vtotal).toInt();
     //
-    //     print("model111====${model.animation.value}===$percentage");
+    //    debugPrint("model111====${model.animation.value}===$percentage");
     //
     //     return Container(
     //       height: lineHeight,

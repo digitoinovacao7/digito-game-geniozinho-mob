@@ -77,7 +77,7 @@ class CommonScoreWidget extends StatelessWidget {
       star = 3;
     }
 
-    print("percentage===$percentage");
+   debugPrint("percentage===$percentage");
     if (score <= 0) {
       star = 0;
       percentage = 0;

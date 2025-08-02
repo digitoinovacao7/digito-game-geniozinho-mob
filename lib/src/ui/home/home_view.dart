@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     Future.delayed(Duration.zero, () {
       adsFile = AdsFile(context);
       adsFile!.createAnchoredBanner(context, onBannerAdLoaded: () {
-        print(
+       debugPrint(
             'HomeView: Banner ad loaded in AdsFile. Calling setState if mounted: $mounted');
         if (mounted) {
           setState(() {});
@@ -125,7 +125,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     fillImageRightPositionTween =
         Tween(begin: -54.0, end: -240.0).animate(animationController);
 
-    setState(() {});
+    // setState(() {}); // Geralmente não é necessário aqui se o build inicial já considera os valores
   }
 
   @override
@@ -180,7 +180,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         flex: 1,
                       ),
                       getSettingWidget(context, function: () {
-                        print("model====${themeMode}");
+                       debugPrint("model====${themeMode}");
                         setState(() {
                           if (themeMode == ThemeMode.dark) {
                             tuple2!.item1.bgColor = "#383838".toColor();
@@ -189,7 +189,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 KeyUtil.bgColorList[tuple2!.item1.position];
                           }
 
-                          print("color====${tuple2!.item1.position}");
+                         debugPrint("color====${tuple2!.item1.position}");
                         });
                       })
                     ],
@@ -223,33 +223,33 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   top: getScreenPercentSize(context, 4)),
                               children: Provider.of<DashboardProvider>(context)
                                   .getGameByPuzzleType(tuple2!.item1.puzzleType)
-                                  .map((e) => HomeButtonView(
-                                      title: e.name,
-                                      icon: e.icon,
-                                      tuple2: tuple2!,
-                                      score: e.scoreboard.highestScore,
-                                      colorTuple: tuple2!.item1.colorTuple,
-                                      opacity: tuple2!.item1.opacity,
-                                      gameCategoryType: e.gameCategoryType,
-                                      onTab: () {
-                                        if (e.gameCategoryType ==
-                                            GameCategoryType.DUAL_GAME) {
-                                          showDuelDialog(
-                                              themeProvider, context);
-                                        } else {
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            KeyUtil.level,
-                                            ModalRoute.withName(KeyUtil.home),
-                                            arguments:
-                                                Tuple2<GameCategory, Dashboard>(
-                                                    e, tuple2!.item1),
-                                          ).then((value) {
-                                            dashboardProvider.getCoin();
-                                          });
-                                        }
-                                      }))
-                                  .toList()),
+                                  .map((e) {
+                                return HomeButtonView(
+                                    title: e.name,
+                                    icon: e.icon,
+                                    tuple2: tuple2!,
+                                    score: e.scoreboard.highestScore,
+                                    colorTuple: tuple2!.item1.colorTuple,
+                                    opacity: tuple2!.item1.opacity,
+                                    gameCategoryType: e.gameCategoryType,
+                                    onTab: () {
+                                      if (e.gameCategoryType ==
+                                          GameCategoryType.DUAL_GAME) {
+                                        showDuelDialog(themeProvider, context);
+                                      } else {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          KeyUtil.level,
+                                          ModalRoute.withName(KeyUtil.home),
+                                          arguments:
+                                              Tuple2<GameCategory, Dashboard>(
+                                                  e, tuple2!.item1),
+                                        ).then((value) {
+                                          dashboardProvider.getCoin();
+                                        });
+                                      }
+                                    });
+                              }).toList()),
                         ],
                       ),
                     ),
@@ -356,7 +356,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       ),
       onTap: () {
         Navigator.pop(context);
-        GradientModel model = new GradientModel();
+        GradientModel model = GradientModel(); // Removido 'new'
         model.primaryColor = tuple2!.item1.primaryColor;
         model.gridColor = tuple2!.item1.gridColor;
 
@@ -378,6 +378,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    animationController.dispose(); // Adicionado dispose para o controller
     super.dispose();
     disposeBannerAd(adsFile);
   }

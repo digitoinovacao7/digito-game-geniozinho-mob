@@ -29,7 +29,7 @@ class CubeRootProvider extends GameProvider<CubeRoot> {
   Future<void> checkResult(String answer) async {
     AudioPlayer audioPlayer = new AudioPlayer(context!);
 
-    print(
+   debugPrint(
         "result===${int.parse(answer) == currentState.answer && timerStatus != TimerStatus.pause}");
 
     if (int.parse(answer) == currentState.answer &&

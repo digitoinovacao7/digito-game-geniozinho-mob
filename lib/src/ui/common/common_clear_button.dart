@@ -28,7 +28,7 @@ class CommonClearButton extends StatelessWidget {
     double radius =
         btnRadius == null ? getCommonCalculatorRadius(context) : btnRadius;
 
-    print("radius===$radius");
+   debugPrint("radius===$radius");
     return CommonTabAnimationView(
         onTab: () {
           onTab();

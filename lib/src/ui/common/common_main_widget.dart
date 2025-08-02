@@ -44,7 +44,7 @@ class CommonMainWidget<T extends GameProvider> extends StatelessWidget {
     var margin = getHorizontalSpace(context);
     var stepSize = getScreenPercentSize(context, 1.3);
 
-    print("type===${KeyUtil.getTimeUtil(gameCategoryType!)}");
+   debugPrint("type===${KeyUtil.getTimeUtil(gameCategoryType!)}");
 
     return Stack(
       children: [
@@ -203,7 +203,7 @@ class CommonMainWidget<T extends GameProvider> extends StatelessWidget {
                                             int currentScore =
                                                 tuple2.item1.toInt();
 
-                                            print(
+                                           debugPrint(
                                                 "current====${tuple2.item2.toInt()}=====${tuple2.item1.toInt()}");
                                             return getTextWidget(
                                                 Theme.of(context)

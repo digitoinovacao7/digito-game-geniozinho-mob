@@ -401,7 +401,7 @@ Widget getCustomFont(String text, double fontSize, Color fontColor, int maxLine,
 // // List<String> getAllAssetsList(BuildContext context) {
 // //   // var config = new File('./assets/imagesNight/arrow_bottom.svg');
 // //   // var str = config.exists();
-// //   // print("setstrs===${str.asStream().isBroadcast}");
+// //   //debugPrint("setstrs===${str.asStream().isBroadcast}");
 // //
 // //   var manifestContent = DefaultAssetBundle.of(context).loadString('AssetManifest.json');
 // //

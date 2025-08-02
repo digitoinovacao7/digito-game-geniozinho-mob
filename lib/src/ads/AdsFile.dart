@@ -27,12 +27,12 @@ class AdsFile implements AdsInterfaces {
 
   @override
   void onAdLoad(InterstitialAd interstitialAds) {
-    print("AdsInterfaces: Interstitial Ad Loaded: ${interstitialAds.adUnitId}");
+   debugPrint("AdsInterfaces: Interstitial Ad Loaded: ${interstitialAds.adUnitId}");
   }
 
   @override
   void onAdClose() {
-    print("AdsInterfaces: Interstitial Ad Closed.");
+   debugPrint("AdsInterfaces: Interstitial Ad Closed.");
   }
 
   // MODIFICADO: Apenas um callback nomeado VoidCallback? onBannerAdLoaded
@@ -45,11 +45,11 @@ class AdsFile implements AdsInterfaces {
     );
 
     if (size == null) {
-      print('Unable to get height of anchored banner.');
+     debugPrint('Unable to get height of anchored banner.');
       return;
     }
-    print('Banner Ad Unit ID: ${getBannerAdUnitId()}');
-    print('Banner size acquired: ${size.width}x${size.height}');
+   debugPrint('Banner Ad Unit ID: ${getBannerAdUnitId()}');
+   debugPrint('Banner size acquired: ${size.width}x${size.height}');
 
     final BannerAd banner = BannerAd(
       size: size,
@@ -57,18 +57,18 @@ class AdsFile implements AdsInterfaces {
       adUnitId: getBannerAdUnitId(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
-          print('$BannerAd loaded.');
+         debugPrint('$BannerAd loaded.');
           _anchoredBanner = ad as BannerAd?; // Definir _anchoredBanner AQUI
           if (onBannerAdLoaded != null) {
             onBannerAdLoaded(); // Chamar o callback para home_view.dart
           }
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('$BannerAd failedToLoad: $error');
+         debugPrint('$BannerAd failedToLoad: $error');
           ad.dispose();
         },
-        onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
-        onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
+        onAdOpened: (Ad ad) =>debugPrint('$BannerAd onAdOpened.'),
+        onAdClosed: (Ad ad) =>debugPrint('$BannerAd onAdClosed.'),
       ),
     );
     return banner.load();
@@ -95,15 +95,15 @@ class AdsFile implements AdsInterfaces {
   // DENTRO DA CLASSE AdsFile
   void showInterstitialAd(Function function) { // 'function' é o seu callback de navegação
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
+     debugPrint('Warning: attempt to show interstitial before loaded.');
       function(); // Navega se o anúncio não estiver carregado
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+         debugPrint('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+       debugPrint('$ad onAdDismissedFullScreenContent.');
         onAdClose(); // Chamada para a interface AdsInterfaces
         ad.dispose();
         _interstitialAd = null;
@@ -111,7 +111,7 @@ class AdsFile implements AdsInterfaces {
         function(); // Navega após o anúncio ser dispensado
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+       debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _interstitialAd = null;
         createInterstitialAd(); // Pré-carrega o próximo anúncio
@@ -126,14 +126,14 @@ class AdsFile implements AdsInterfaces {
     bool _isRewarded = false;
     if (_rewardedAd == null) {
       function1();
-      print('Warning: attempt to show rewarded before loaded.');
+     debugPrint('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+         debugPrint('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+       debugPrint('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _rewardedAd = null;
         createRewardedAd();
@@ -144,7 +144,7 @@ class AdsFile implements AdsInterfaces {
         }
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+       debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _rewardedAd = null;
         createRewardedAd();
@@ -153,7 +153,7 @@ class AdsFile implements AdsInterfaces {
 
     _rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+     debugPrint('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
       _isRewarded = true;
     });
   }
@@ -166,7 +166,7 @@ class AdsFile implements AdsInterfaces {
         request: request,
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('reward====$ad loaded.');
+           debugPrint('reward====$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },

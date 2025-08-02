@@ -10,7 +10,7 @@ import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
-import '../app/theme_provider.dart';
+import '../app/theme_provider.dart'; // Ensure this path is correct
 import '../resizer/fetch_pixels.dart';
 
 class DashboardView extends StatefulWidget {
@@ -31,16 +31,16 @@ class _DashboardViewState extends State<DashboardView>
     super.initState();
     isHomePageOpen = false;
     _controller = AnimationController(
-      duration: Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 700),
       vsync: this,
     );
     _offsetLeftEnter = Tween<Offset>(
-      begin: Offset(2, 0),
+      begin: const Offset(2, 0),
       end: Offset.zero,
     ).animate(_controller);
 
     _offsetRightEnter = Tween<Offset>(
-      begin: Offset(-2.0, 0.0),
+      begin: const Offset(-2.0, 0.0),
       end: Offset.zero,
     ).animate(_controller);
     _controller.forward();
@@ -49,16 +49,16 @@ class _DashboardViewState extends State<DashboardView>
   @override
   void dispose() {
     _audioPlayer.dispose();
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   Future<void> _playClickSound() async {
     try {
       await _audioPlayer.play(AssetSource('tick.mp3'));
-      print("Música tocada com sucesso");
+     debugPrint("Música tocada com sucesso");
     } catch (e) {
-      print("Erro ao tocar música: $e");
+     debugPrint("Erro ao tocar música: $e");
     }
   }
 
@@ -75,6 +75,8 @@ class _DashboardViewState extends State<DashboardView>
     FetchPixels(context);
     double margin = getHorizontalSpace(context);
     double verticalSpace = getScreenPercentSize(context, 3);
+    // ThemeProvider is fetched but not directly used in getItem's corrected logic
+    // It might be used elsewhere or by child widgets implicitly.
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     setStatusBarColor(Theme.of(context).scaffoldBackgroundColor);
@@ -91,16 +93,12 @@ class _DashboardViewState extends State<DashboardView>
         child: Scaffold(
           appBar: getNoneAppBar(context),
           body: Stack(
-            // <--- ENVOLVENDO O BODY COM STACK
-            fit: StackFit.expand, // Para a imagem de fundo preencher
+            fit: StackFit.expand,
             children: <Widget>[
-              // IMAGEM DE FUNDO
               Image.asset(
                 'assets/images/background_dashboard.png',
                 fit: BoxFit.cover,
               ),
-
-              // SEU CONTEÚDO ORIGINAL
               SafeArea(
                 bottom: true,
                 child: Padding(
@@ -149,7 +147,8 @@ class _DashboardViewState extends State<DashboardView>
                                       KeyUtil.home,
                                       ModalRoute.withName(KeyUtil.dashboard),
                                       arguments: Tuple2(
-                                          getItem(0, themeProvider),
+                                          // Pass context instead of themeProvider if getItem now uses Theme.of(context)
+                                          getItem(0, context),
                                           MediaQuery.of(context).padding.top),
                                     );
                                   },
@@ -166,7 +165,8 @@ class _DashboardViewState extends State<DashboardView>
                                       KeyUtil.home,
                                       ModalRoute.withName(KeyUtil.dashboard),
                                       arguments: Tuple2(
-                                          getItem(1, themeProvider),
+                                          // Pass context
+                                          getItem(1, context),
                                           MediaQuery.of(context).padding.top),
                                     );
                                   },
@@ -183,7 +183,8 @@ class _DashboardViewState extends State<DashboardView>
                                       KeyUtil.home,
                                       ModalRoute.withName(KeyUtil.dashboard),
                                       arguments: Tuple2(
-                                          getItem(2, themeProvider),
+                                          // Pass context
+                                          getItem(2, context),
                                           MediaQuery.of(context).padding.top),
                                     );
                                   },
@@ -208,10 +209,12 @@ class _DashboardViewState extends State<DashboardView>
     );
   }
 
-  Dashboard getItem(int i, ThemeProvider themeProvider) {
+  // Changed ThemeProvider to BuildContext as we'll use Theme.of(context)
+  Dashboard getItem(int i, BuildContext context) {
     var model = KeyUtil.dashboardItems[i];
 
-    if (themeMode == ThemeMode.dark) {
+    // Check the brightness of the current theme
+    if (Theme.of(context).brightness == Brightness.dark) {
       model.bgColor = "#383838".toColor();
     } else {
       model.bgColor = KeyUtil.bgColorList[i];

@@ -32,10 +32,10 @@ class MathGridView extends StatelessWidget {
 
     double width = screenWidth / 9;
 
-    print("screenSize ====$screenWidth-----$screenHeight");
+   debugPrint("screenSize ====$screenWidth-----$screenHeight");
     if (screenHeight < screenWidth) {
       width = getScreenPercentSize(context, 3);
-      print("width ====$width");
+     debugPrint("width ====$width");
     }
 
     return MultiProvider(

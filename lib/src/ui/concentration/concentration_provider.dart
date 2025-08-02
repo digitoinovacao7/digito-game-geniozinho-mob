@@ -30,7 +30,7 @@ class ConcentrationProvider extends GameProvider<MathPairs> {
     this.context = context;
     this.nextQuiz = nextQuiz;
 
-    print("start===true");
+   debugPrint("start===true");
 
     startGame(level: this.level == null ? null : level, isTimer: isTimer);
   }
@@ -53,9 +53,9 @@ class ConcentrationProvider extends GameProvider<MathPairs> {
 
           notifyListeners();
           if (currentState.availableItem == 0) {
-            print("oldScore===$oldScore====$currentScore");
+           debugPrint("oldScore===$oldScore====$currentScore");
 
-            print("oldScore===$oldScore====$currentScore");
+           debugPrint("oldScore===$oldScore====$currentScore");
 
             await Future.delayed(Duration(milliseconds: 300));
             loadNewDataIfRequired(level: level == null ? 1 : level);

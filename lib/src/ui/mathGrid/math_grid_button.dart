@@ -30,11 +30,11 @@ class MathGridButton extends StatelessWidget {
     double width = screenWidth / 9;
     double fontSize = getPercentSize(width, 40);
 
-    print("screenSize ====$screenWidth-----$screenHeight");
+   debugPrint("screenSize ====$screenWidth-----$screenHeight");
     if (screenHeight < screenWidth) {
       width = getScreenPercentSize(context, 0.3);
       fontSize = getScreenPercentSize(context, 1.7);
-      print("width ====$width---${getPercentSize(width, 100)}");
+     debugPrint("width ====$width---${getPercentSize(width, 100)}");
     }
 
     Color color = "#383838".toColor();

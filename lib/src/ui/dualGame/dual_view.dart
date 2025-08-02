@@ -116,7 +116,7 @@ class DualView extends StatelessWidget {
                                       context
                                           .read<DualGameProvider>()
                                           .checkResult1(e);
-                                      print(
+                                     debugPrint(
                                           ("score1====${context.read<DualGameProvider>().score1}"));
                                     },
                                     colorTuple: colorTuple,

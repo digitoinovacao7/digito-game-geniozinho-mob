@@ -98,7 +98,7 @@ class MagicTriangleView extends StatelessWidget {
                             Expanded(
                               child: LayoutBuilder(
                                   builder: (context, constraints) {
-                                print(
+                               debugPrint(
                                     "size---${constraints.maxWidth}----${constraints.maxWidth}");
                                 return Stack(
                                   alignment: Alignment.center,
@@ -198,7 +198,7 @@ class MagicTriangleView extends StatelessWidget {
         //     Expanded(
         //       child: LayoutBuilder(builder: (context, constraints) {
         //
-        //         print("size---${constraints.maxWidth}----${constraints.maxWidth}");
+        //        debugPrint("size---${constraints.maxWidth}----${constraints.maxWidth}");
         //         return Stack(
         //           alignment: Alignment.center,
         //           children: <Widget>[

@@ -34,7 +34,7 @@ class DualGameProvider extends GameProvider<QuizModel> {
       }
       result = answer;
       notifyListeners();
-      print(
+     debugPrint(
           "result====${currentState.answer}===$result===${(result == currentState.answer)}");
       if (result == currentState.answer) {
         score2++;
@@ -62,7 +62,7 @@ class DualGameProvider extends GameProvider<QuizModel> {
       result = answer;
       notifyListeners();
 
-      print(
+     debugPrint(
           "result====${currentState.answer}===$result===${(result == currentState.answer)}");
       if (result == currentState.answer) {
         score1++;

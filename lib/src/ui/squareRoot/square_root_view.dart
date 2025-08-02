@@ -102,7 +102,7 @@ class SquareRootView extends StatelessWidget {
                           return Selector<SquareRootProvider, SquareRoot>(
                               selector: (p0, p1) => p1.currentState,
                               builder: (context, currentState, child) {
-                                print("valueG===true");
+                               debugPrint("valueG===true");
 
                                 final list = [
                                   currentState.firstAns,

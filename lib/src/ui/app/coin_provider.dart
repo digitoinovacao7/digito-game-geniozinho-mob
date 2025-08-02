@@ -10,12 +10,12 @@ class CoinProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     coin = prefs.getInt(keyCoin) ?? 0;
 
-    print("coin===$coin");
+   debugPrint("coin===$coin");
     notifyListeners();
   }
 
   addCoin() async {
-    print("coin===12 $coin");
+   debugPrint("coin===12 $coin");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(keyCoin, (coin + rightCoin));
     getCoin();

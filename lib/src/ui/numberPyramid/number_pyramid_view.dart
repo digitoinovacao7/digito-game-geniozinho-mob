@@ -101,7 +101,7 @@ class NumberPyramidView extends StatelessWidget {
         //             child: Consumer<NumberPyramidProvider>(builder:
         //                 (context, numberPyramidProvider, child) {
         //
-        //               print("value---${numberPyramidProvider
+        //              debugPrint("value---${numberPyramidProvider
         //                   .currentState.list[10]}");
         //               return Column(
         //                 mainAxisSize: MainAxisSize.min,
@@ -524,7 +524,7 @@ class NumberPyramidView extends StatelessWidget {
                       return Center(
                         child: Consumer<NumberPyramidProvider>(
                             builder: (context, numberPyramidProvider, child) {
-                          print(
+                         debugPrint(
                               "value---${numberPyramidProvider.currentState.list[10]}");
                           return Column(
                             mainAxisSize: MainAxisSize.min,

@@ -30,7 +30,7 @@ class TimeProvider extends CoinProvider {
         notifyListeners();
       }
 
-      print("currentTime===$currentTime");
+     debugPrint("currentTime===$currentTime");
     });
   }
 
@@ -56,7 +56,7 @@ class TimeProvider extends CoinProvider {
         notifyListeners();
       }
 
-      print("currentTime===$currentTime");
+     debugPrint("currentTime===$currentTime");
     });
   }
 
@@ -105,14 +105,14 @@ class TimeProvider extends CoinProvider {
   }
 
   void increase() {
-    // print("timerval===${_animationController.value}");
+    //debugPrint("timerval===${_animationController.value}");
     // _animationController.value = _animationController.value + 0.05;
     // _animationController.reverse();
   }
 
   @override
   void dispose() {
-    print("dispose---true");
+   debugPrint("dispose---true");
     // _animationController.dispose();
     if (timer != null) {
       timer!.cancel();

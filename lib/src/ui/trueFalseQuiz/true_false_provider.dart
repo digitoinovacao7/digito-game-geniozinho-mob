@@ -27,7 +27,7 @@ class TrueFalseProvider extends GameProvider<TrueFalseModel> {
       notifyListeners();
 
 
-      print("result====$result====${currentState.answer}");
+     debugPrint("result====$result====${currentState.answer}");
 
 
 

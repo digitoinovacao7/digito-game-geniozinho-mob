@@ -223,7 +223,7 @@ class _CommonScoreViewState extends State<CommonScoreView>
 //
 //   @override
 //   void didUpdateWidget(CommonScoreView1 oldWidget) {
-//     print("ok ${widget.currentScore} ${widget.oldScore}");
+//    debugPrint("ok ${widget.currentScore} ${widget.oldScore}");
 //     if (oldWidget.currentScore != widget.currentScore &&
 //         oldWidget.oldScore != widget.oldScore) {
 //       if (widget.currentScore > widget.currentScore) {

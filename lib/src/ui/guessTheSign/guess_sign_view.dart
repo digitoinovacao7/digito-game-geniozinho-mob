@@ -40,7 +40,7 @@ class GuessSignView extends StatelessWidget {
 
     shuffle(list);
 
-    print("value===1");
+   debugPrint("value===1");
     return MultiProvider(
       providers: [
         const VsyncProvider(),
@@ -141,7 +141,7 @@ class GuessSignView extends StatelessWidget {
                               Selector<GuessSignProvider, Sign>(
                                   selector: (p0, p1) => p1.currentState,
                                   builder: (context, provider, child) {
-                                    print("valueG===true");
+                                   debugPrint("valueG===true");
 
                                     return getTextWidget(
                                         Theme.of(context).textTheme.titleSmall!,
@@ -161,7 +161,7 @@ class GuessSignView extends StatelessWidget {
                           return Selector<GuessSignProvider, Sign>(
                               selector: (p0, p1) => p1.currentState,
                               builder: (context, provider, child) {
-                                print("valueG===true");
+                               debugPrint("valueG===true");
 
                                 shuffle(list);
 

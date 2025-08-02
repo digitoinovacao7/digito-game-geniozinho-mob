@@ -34,7 +34,7 @@ class PyramidNumberButton extends StatelessWidget {
     double btnHeight = (buttonHeight / 10);
     double fontSize = getPercentSize(btnHeight, 23);
 
-    print("screenSize ====$screenWidth-----$screenHeight--${(btnHeight)}");
+   debugPrint("screenSize ====$screenWidth-----$screenHeight--${(btnHeight)}");
     if (screenHeight < screenWidth) {
       fontSize = getPercentSize((btnHeight), 30);
       //   fontSize = getScreenPercentSize(context, 1);

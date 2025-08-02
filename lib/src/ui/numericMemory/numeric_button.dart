@@ -32,7 +32,7 @@ class NumericMemoryButton extends StatelessWidget {
         : Colors.transparent;
     return InkWell(
       onTap: () {
-        print("isContinue123===$isContinue");
+       debugPrint("isContinue123===$isContinue");
         if (isContinue) {
           function();
         }

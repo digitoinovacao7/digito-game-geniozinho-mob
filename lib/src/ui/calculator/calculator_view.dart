@@ -59,7 +59,7 @@ class CalculatorView extends StatelessWidget {
       providers: [
         const VsyncProvider(),
         ChangeNotifierProvider<CalculatorProvider>(create: (context) {
-          print("nível----");
+         debugPrint("nível----");
           return CalculatorProvider(
               vsync: VsyncProvider.of(context),
               level: colorTuple.item2,

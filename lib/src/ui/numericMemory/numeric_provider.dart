@@ -36,7 +36,7 @@ class NumericMemoryProvider extends GameProvider<NumericMemoryPair> {
   Future<void> checkResult(String mathPair, int index) async {
     AudioPlayer audioPlayer = new AudioPlayer(context!);
 
-    print("mathPair===$mathPair===${currentState.answer}");
+   debugPrint("mathPair===$mathPair===${currentState.answer}");
 
     if (mathPair == currentState.answer) {
       audioPlayer.playRightSound();

@@ -48,7 +48,7 @@ class ConcentrationView extends StatelessWidget {
                   level: colorTuple.item2,
                   isTimer: false,
                   nextQuiz: () {
-                    print("isContinue====$isContinue");
+                   debugPrint("isContinue====$isContinue");
                     snapshot(() {
                       isContinue = false;
                     });

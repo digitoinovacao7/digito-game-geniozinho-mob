@@ -53,7 +53,7 @@ class CommonGameOverDialogView extends StatelessWidget {
       star = 3;
     }
 
-    print("start---$star");
+   debugPrint("start---$star");
 
     return CommonScoreWidget(
       context: context,

@@ -55,7 +55,7 @@ class NumericMemoryView extends StatelessWidget {
           },
         );
       }
-      print("hello===true");
+     debugPrint("hello===true");
       return MultiProvider(
         providers: [
           const VsyncProvider(),
@@ -68,7 +68,7 @@ class NumericMemoryView extends StatelessWidget {
                     snapshot(() {
                       isContinue = false;
                     });
-                    print("isContinue====$isContinue");
+                   debugPrint("isContinue====$isContinue");
                     Future.delayed(
                       Duration(seconds: 2),
                       () {
@@ -78,7 +78,7 @@ class NumericMemoryView extends StatelessWidget {
                       },
                     );
 
-                    // print("isContinue====$isContinue");
+                    //debugPrint("isContinue====$isContinue");
                     // snapshot((){
                     //   isContinue = false;
                     // });
@@ -90,7 +90,7 @@ class NumericMemoryView extends StatelessWidget {
           gameCategoryType: GameCategoryType.NUMERIC_MEMORY,
           level: colorTuple.item2,
           nextQuiz: () {
-            print("isNewData===true");
+           debugPrint("isNewData===true");
             // snapshot(() {
             //   isContinue = false;
             // });

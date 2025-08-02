@@ -53,7 +53,7 @@ class _DialogListenerState<T extends GameProvider>
 
   void addListener() {
     double radius = getScreenPercentSize(context, 5);
-    print(
+   debugPrint(
         "dialog---true---${provider.dialogType}----${context.read<T>().currentScore}");
 
     if (isDialogOpen != null && !isDialogOpen!) {
@@ -111,7 +111,7 @@ class _DialogListenerState<T extends GameProvider>
               ),
               barrierDismissible: false,
             ).then((value) {
-              print("level===$level");
+             debugPrint("level===$level");
               isDialogOpen = false;
               context.read<T>().updateScore();
               if (value != null && value) {

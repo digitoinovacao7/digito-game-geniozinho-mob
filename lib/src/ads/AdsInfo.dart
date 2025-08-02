@@ -73,7 +73,7 @@ String getRewardBasedVideoAdUnitId() {
     } else if (Platform.isAndroid) {
       // CERTIFIQUE-SE QUE ESTE É O SEU ID DE PRODUÇÃO REAL DO ADMOB
       if (_androidProductionRewardedId == "ca-app-pub-YOUR_ANDROID_PRODUCTION_REWARDED_ID") {
-        print("ALERTA: ID de Recompensado de Produção para Android não configurado em AdsInfo.dart!");
+       debugPrint("ALERTA: ID de Recompensado de Produção para Android não configurado em AdsInfo.dart!");
         return _androidTestRewardedId; // Fallback para teste para evitar crash, mas não ideal
       }
       return _androidProductionRewardedId;

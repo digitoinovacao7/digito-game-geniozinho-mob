@@ -114,7 +114,7 @@ class CubeRootView extends StatelessWidget {
                           return Selector<CubeRootProvider, CubeRoot>(
                               selector: (p0, p1) => p1.currentState,
                               builder: (context, currentState, child) {
-                                print("valueG===true");
+                               debugPrint("valueG===true");
 
                                 final list = [
                                   currentState.firstAns,
@@ -210,7 +210,7 @@ class CubeRootView extends StatelessWidget {
         //                   selector: (p0, p1) => p1.currentState,
         //                   builder: (context, currentState, child) {
         //
-        //                     print("currentState===${currentState.question}");
+        //                    debugPrint("currentState===${currentState.question}");
         //
         //                     return getTextWidget(
         //                         Theme.of(context).textTheme.subtitle2!,

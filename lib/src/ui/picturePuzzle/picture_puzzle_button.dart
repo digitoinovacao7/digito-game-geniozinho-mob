@@ -25,7 +25,7 @@ class PicturePuzzleButton extends StatelessWidget {
 
     double width = getWidthPercentSize(context, 100) / 15;
 
-    print("screenSize ====$screenWidth-----$screenHeight");
+   debugPrint("screenSize ====$screenWidth-----$screenHeight");
     if (screenHeight < screenWidth) {
       width = getScreenPercentSize(context, 2);
     }

@@ -74,7 +74,7 @@ class MagicTriangleProvider extends GameProvider<MagicTriangle> {
           notifyListeners();
         } else {
           audioPlayer.playWrongSound();
-          print("wrong---tue");
+         debugPrint("wrong---tue");
         }
       }
       notifyListeners();
