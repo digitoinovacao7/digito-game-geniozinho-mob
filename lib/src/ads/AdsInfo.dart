@@ -11,7 +11,7 @@ AdRequest request = AdRequest(
 // ANDROID
 const String _androidProductionInterstitialId = "ca-app-pub-9124633416063149/6643124577";
 const String _androidProductionBannerId = "ca-app-pub-9124633416063149/8913865007";
-const String _androidProductionRewardedId = "ca-app-pub-YOUR_ANDROID_PRODUCTION_REWARDED_ID";
+const String _androidProductionRewardedId = "ca-app-pub-9124633416063149/4629586741";
 
 // IOS (Preencha com seus IDs de produção do AdMob para iOS se for lançar para iOS)
 const String _iosProductionInterstitialId = "ca-app-pub-YOUR_IOS_PRODUCTION_INTERSTITIAL_ID";
@@ -64,21 +64,18 @@ String getBannerAdUnitId() {
 }
 
 String getRewardBasedVideoAdUnitId() {
-  // O ID de Recompensado de PRODUÇÃO para Android que você tinha era um ID de TESTE!
-  // 'ca-app-pub-3940256099942544/8691691433' é um ID de teste do AdMob.
-  // VOCÊ PRECISA SUBSTITUIR _androidProductionRewardedId ACIMA PELO SEU ID DE PRODUÇÃO REAL.
   if (kReleaseMode) {
     if (Platform.isIOS) {
-      return _iosProductionRewardedId; // Use seu ID de produção iOS
-    } else if (Platform.isAndroid) {
-      // CERTIFIQUE-SE QUE ESTE É O SEU ID DE PRODUÇÃO REAL DO ADMOB
-      if (_androidProductionRewardedId == "ca-app-pub-YOUR_ANDROID_PRODUCTION_REWARDED_ID") {
-       debugPrint("ALERTA: ID de Recompensado de Produção para Android não configurado em AdsInfo.dart!");
-        return _androidTestRewardedId; // Fallback para teste para evitar crash, mas não ideal
+      // ALERTA: ID de Recompensado de Produção para iOS não configurado.
+      if (_iosProductionRewardedId == "ca-app-pub-YOUR_IOS_PRODUCTION_REWARDED_ID") {
+        debugPrint("ALERTA: ID de Recompensado de Produção para iOS não configurado em AdsInfo.dart!");
+        return _iosTestRewardedId; // Fallback para teste para evitar crash
       }
+      return _iosProductionRewardedId;
+    } else if (Platform.isAndroid) {
       return _androidProductionRewardedId;
     }
-  } else {
+  } else { // MODO DEBUG
     if (Platform.isIOS) {
       return _iosTestRewardedId;
     } else if (Platform.isAndroid) {
