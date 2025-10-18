@@ -26,13 +26,13 @@ class LevelView extends StatefulWidget {
 
 class _LevelViewState extends State<LevelView> with TickerProviderStateMixin {
   AdsFile? adsFile;
-  late AnimationController animationController; // Tornar non-nullable e inicializar em initState
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
 
-    animationController = AnimationController( // Inicializar aqui
+    animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
 
     Future.delayed(Duration.zero, () {
@@ -43,8 +43,6 @@ class _LevelViewState extends State<LevelView> with TickerProviderStateMixin {
   }
 
   Future<bool> _requestPop() {
-    // REMOVER a chamada de dispose daqui
-
     if (kIsWeb) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         if (mounted) Navigator.of(context).pop();
@@ -57,7 +55,7 @@ class _LevelViewState extends State<LevelView> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    animationController.dispose(); // Agora é seguro chamar apenas aqui
+    animationController.dispose();
     disposeInterstitialAd(adsFile);
     super.dispose();
   }
@@ -140,12 +138,12 @@ class _LevelViewState extends State<LevelView> with TickerProviderStateMixin {
                         final Animation<double> animation =
                             Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
-                            parent: animationController, // Agora é non-nullable
+                            parent: animationController,
                             curve: Interval((1 / defaultLevelSize) * index, 1.0,
                                 curve: Curves.fastOutSlowIn),
                           ),
                         );
-                        animationController.forward(); // Agora é non-nullable
+                        animationController.forward();
                         return buildAnimatedItem(
                             context,
                             index,

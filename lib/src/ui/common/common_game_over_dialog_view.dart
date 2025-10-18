@@ -99,10 +99,6 @@ class CommonGameOverDialogView extends StatelessWidget {
         share();
       },
     );
-
-    // return Container(
-    //   height: 400,
-    // );
   }
 
   share() async {

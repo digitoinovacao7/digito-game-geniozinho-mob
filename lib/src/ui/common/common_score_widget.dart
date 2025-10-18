@@ -55,7 +55,6 @@ class CommonScoreWidget extends StatelessWidget {
 
     double appBarHeight = getScreenPercentSize(context, 25);
     double mainHeight = getScreenPercentSize(context, 30);
-    // double mainHeight = getMainHeight(context);
     var radius = getScreenPercentSize(context, 2.5);
     var circle = getScreenPercentSize(context, 12);
     var circle1 = getScreenPercentSize(context, 9.4);
@@ -77,420 +76,186 @@ class CommonScoreWidget extends StatelessWidget {
       star = 3;
     }
 
-   debugPrint("percentage===$percentage");
     if (score <= 0) {
       star = 0;
       percentage = 0;
     }
 
-    // bool isDetailView = isDetailWidget(gameCategoryType!);
-
     return Container(
       width: double.infinity,
       color: Colors.transparent,
-
-      // color: Theme.of(context).scaffoldBackgroundColor,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 0),
-        child: Stack(
-          children: [
-            Container(
-              color: Colors.transparent,
-              height: mainHeight,
-              child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                backgroundColor: Colors.transparent,
-                primary: false,
-                appBar: AppBar(
-                  bottomOpacity: 0.0,
-                  title: const Text(''),
-                  toolbarHeight: 0,
-                  elevation: 0,
-                ),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerDocked,
-                floatingActionButton: SizedBox(
-                  width: (circle),
-                  height: (circle),
-                  child: Stack(
-                    children: [
-                      Container(
-                        child: CircularStepProgressIndicator(
-                          totalSteps: totalLevel,
-                          currentStep: currentLevel,
-                          stepSize: stepSize,
-                          selectedColor: colorTuple.item1.primaryColor,
-                          unselectedColor: Theme.of(context)
-                              .colorScheme
-                              .unSelectedProgressColor,
-                          padding: 0,
-                          width: circle,
-                          height: circle,
-                          selectedStepSize: stepSize,
-                          roundedCap: (_, __) => true,
-                        ),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: mainHeight,
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.transparent,
+              primary: false,
+              appBar: AppBar(
+                bottomOpacity: 0.0,
+                title: const Text(''),
+                toolbarHeight: 0,
+                elevation: 0,
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              floatingActionButton: SizedBox(
+                width: (circle),
+                height: (circle),
+                child: Stack(
+                  children: [
+                    Container(
+                      child: CircularStepProgressIndicator(
+                        totalSteps: totalLevel,
+                        currentStep: currentLevel,
+                        stepSize: stepSize,
+                        selectedColor: colorTuple.item1.primaryColor!,
+                        unselectedColor:
+                            Theme.of(context).colorScheme.unSelectedProgressColor,
+                        padding: 0,
+                        width: circle,
+                        height: circle,
+                        selectedStepSize: stepSize,
+                        roundedCap: (_, __) => true,
                       ),
-                      Center(
-                        child: Container(
-                          width: circle1,
-                          height: circle1,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              shape: BoxShape.circle),
-                          child: Center(
-                            child: getTextWidget(
-                                Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(fontWeight: FontWeight.w600),
-                                '$currentLevel/$totalLevel\nLevel',
-                                TextAlign.center,
-                                getPercentSize(circle, 15)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                bottomNavigationBar: ClipRRect(
-                  clipBehavior: Clip.hardEdge,
-                  borderRadius: BorderRadius.all(Radius.circular(radius)),
-                  child: Container(
-                    height: (appBarHeight),
-                    child: BottomAppBar(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      elevation: 0,
-                      shape: CircularNotchedRectangle(),
-                      notchMargin: (10),
+                    ),
+                    Center(
                       child: Container(
-                        padding: EdgeInsets.all(
-                            FetchPixels.getDefaultHorSpace(context)),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: getDefaultIconWidget(context,
-                              icon: AppAssets.closeIcon,
-                              folder: colorTuple.item1.folderName,
-                              function: () {
-                            closeClick();
-                          }),
+                        width: circle1,
+                        height: circle1,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            shape: BoxShape.circle),
+                        child: Center(
+                          child: getTextWidget(
+                              Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(fontWeight: FontWeight.w600),
+                              '$currentLevel/$totalLevel\nLevel',
+                              TextAlign.center,
+                              getPercentSize(circle, 15)),
                         ),
                       ),
-                      // child:    Container(
-                      //   width: double.infinity,
-                      // //   // height: scoreHeight,
-                      // //   padding:
-                      // //   EdgeInsets.only(top: getPercentSize(mainHeight, 52)),
-                      // //   margin:
-                      // //   EdgeInsets.only(top: getPercentSize(mainHeight, 52)),
-                      //   padding: EdgeInsets.all(
-                      //        getPercentSize(scoreHeight, 10)),
-                      //   // decoration: getDecorationWithSide(
-                      //   //     radius: radius,
-                      //   //     bgColor: colorTuple.item1.bgColor,
-                      //   //     isBottomLeft: true,
-                      //   //     isBottomRight: true),
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     mainAxisSize: MainAxisSize.min,
-                      //     children: [
-                      //
-                      //       Align(
-                      //         alignment: Alignment.topRight,
-                      //         child: getDefaultIconWidget(context,
-                      //             icon: AppAssets.backIcon,
-                      //             folder: colorTuple.item1.folderName, function: () {
-                      //               closeClick();
-                      //             }),
-                      //       ),
-                      //
-                      //
-                      //
-                      //       SizedBox(height: getScreenPercentSize(context, 6)),
-                      //
-                      //       Center(
-                      //         child: getTextWidget(
-                      //             Theme.of(context)
-                      //                 .textTheme
-                      //                 .bodyText1!
-                      //                 .copyWith(fontWeight: FontWeight.bold),
-                      //             "Game Over!!!",
-                      //             TextAlign.center,
-                      //             getScreenPercentSize(context, 3)),
-                      //       ),
-                      //
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           getTextWidget(
-                      //               Theme.of(context)
-                      //                   .textTheme
-                      //                   .subtitle2!
-                      //                   .copyWith(fontWeight: FontWeight.w600),
-                      //               score.toString(),
-                      //               TextAlign.center,
-                      //               getPercentSize(scoreHeight, 25)),
-                      //           SizedBox(
-                      //             width: getWidthPercentSize(context, 1.2),
-                      //           ),
-                      //           SvgPicture.asset(
-                      //             AppAssets.icTrophy,
-                      //             height: getPercentSize(scoreHeight, 20),
-                      //             width: getPercentSize(scoreHeight, 15),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       SizedBox(height: getPercentSize(scoreHeight, 8)),
-                      //       getTextWidget(
-                      //           Theme.of(context)
-                      //               .textTheme
-                      //               .subtitle2!
-                      //               .copyWith(fontWeight: FontWeight.w500),
-                      //           'Your Score',
-                      //           TextAlign.center,
-                      //           getPercentSize(scoreHeight, 12)),
-                      //       Visibility(
-                      //         visible: isDetailView,
-                      //         child: Container(
-                      //           height: btnHeight,
-                      //           margin: EdgeInsets.symmetric(
-                      //               vertical: getScreenPercentSize(context, 3)),
-                      //           child: Row(
-                      //             children: [
-                      //               Expanded(
-                      //                   child: Container(
-                      //                     alignment: Alignment.center,
-                      //                     decoration: getDefaultDecoration(
-                      //                         isShadow: themeMode == ThemeMode.dark?null:true,
-                      //                         shadowColor: getShadowColor(context),
-                      //                         bgColor: themeMode == ThemeMode.dark?colorTuple.item1.bgColor!:getBgColor(themeProvider, colorTuple.item1.bgColor!),
-                      //                         radius: radius),
-                      //                     child: getDetail(context, right.toString(),
-                      //                         AppAssets.rightIcon, btnHeight),
-                      //                   )),
-                      //               SizedBox(width: getHorizontalSpace(context)),
-                      //               Expanded(
-                      //                   child: Container(
-                      //                     alignment: Alignment.center,
-                      //                     decoration: getDefaultDecoration(
-                      //                         isShadow: themeMode == ThemeMode.dark?null:true,
-                      //                         shadowColor: getShadowColor(context),
-                      //                         bgColor: themeMode == ThemeMode.dark?colorTuple.item1.bgColor!:getBgColor(themeProvider, colorTuple.item1.bgColor!),
-                      //
-                      //                         radius: radius),
-                      //                     child: getDetail(context, wrong.toString(),
-                      //                         AppAssets.wrongIcon, btnHeight),
-                      //                   )),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //
-                      //       Visibility(child: SizedBox(height: getScreenPercentSize(context, 3),),visible: !isDetailView),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           getStarWidget(star, starSize, 0),
-                      //           SizedBox(width: getWidthPercentSize(context, 5)),
-                      //           getStarWidget(star, starSize, 1),
-                      //           SizedBox(width: getWidthPercentSize(context, 5)),
-                      //           getStarWidget(star, starSize, 2),
-                      //         ],
-                      //       ),
-                      //       new Spacer(),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           getHomeButton(themeProvider,context, AppAssets.scoreShareIcon,(){
-                      //             shareClick();
-                      //           }),
-                      //           getHomeButton(themeProvider,context,'${getFolderName(context, colorTuple.item1.folderName!)}${AppAssets.scoreHomeIcon}' ,(){
-                      //             homeClick();
-                      //           },isFolder: true)
-                      //         ],
-                      //       ),
-                      //
-                      //
-                      //       Row(
-                      //         children: [
-                      //           Expanded(
-                      //             child: getButtonWidget(
-                      //                 context, "Restart", colorTuple.item1.primaryColor,
-                      //                 isBorder: true, () {
-                      //
-                      //
-                      //
-                      //               nextClick();
-                      //
-                      //
-                      //             },
-                      //                 textColor: Theme.of(context).textTheme.bodyText1!.color,
-                      //                 borderColor: Theme.of(context).textTheme.bodyText1!.color),
-                      //             flex: 1,
-                      //           ),
-                      //           Visibility(
-                      //               visible: colorTuple.item2 < defaultLevelSize,
-                      //               child: SizedBox(width: getHorizontalSpace(context))),
-                      //           Visibility(
-                      //             visible: colorTuple.item2 < defaultLevelSize,
-                      //             child: Expanded(
-                      //               child: Opacity(
-                      //                 opacity: star >= 2 ? 1 : 0.5,
-                      //                 child: getButtonWidget(
-                      //                     context, "Next", colorTuple.item1.primaryColor, () {
-                      //                   restartClick();
-                      //                 }, textColor: Colors.black),
-                      //               ),
-                      //               flex: 1,
-                      //             ),
-                      //           )
-                      //         ],
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
+                    )
+                  ],
+                ),
+              ),
+              bottomNavigationBar: ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.all(Radius.circular(radius)),
+                child: Container(
+                  height: (appBarHeight),
+                  child: BottomAppBar(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    elevation: 0,
+                    shape: CircularNotchedRectangle(),
+                    notchMargin: (10),
+                    child: Container(
+                      padding: EdgeInsets.all(
+                          FetchPixels.getDefaultHorSpace(context)),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: getDefaultIconWidget(context,
+                            icon: AppAssets.closeIcon,
+                            folder: colorTuple.item1.folderName,
+                            function: () {
+                          closeClick();
+                        }),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              // height: FetchPixels.getPixelHeight(600),
-              //   // height: scoreHeight,
-              //   padding:
-              //   EdgeInsets.only(top: getPercentSize(mainHeight, 52)),
-              margin: EdgeInsets.only(top: getPercentSize(mainHeight, 60)),
-              // padding: EdgeInsets.all(
-              //     getPercentSize(scoreHeight, 10)),
-              decoration: getDecorationWithSide(
-                  radius: radius,
-                  bgColor: Theme.of(context).scaffoldBackgroundColor,
-                  isBottomLeft: true,
-                  isBottomRight: true),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // SizedBox(height: getScreenPercentSize(context, 2)),
-
-                  Center(
-                    child: getTextWidget(
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: getPercentSize(mainHeight, 60)),
+            decoration: getDecorationWithSide(
+                radius: radius,
+                bgColor: Theme.of(context).scaffoldBackgroundColor,
+                isBottomLeft: true,
+                isBottomRight: true),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: getTextWidget(
+                      Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                      "Game Over!!!",
+                      TextAlign.center,
+                      getScreenPercentSize(context, 3.5)),
+                ),
+                SizedBox(height: getScreenPercentSize(context, 5)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    getTextWidget(
                         Theme.of(context)
                             .textTheme
-                            .bodyLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
-                        "Game Over!!!",
+                            .titleSmall!
+                            .copyWith(fontWeight: FontWeight.w600),
+                        score.toString(),
                         TextAlign.center,
-                        getScreenPercentSize(context, 3.5)),
-                  ),
-                  SizedBox(height: getScreenPercentSize(context, 5)),
+                        getPercentSize(scoreHeight, 30)),
+                    SizedBox(
+                      width: getWidthPercentSize(context, 1.2),
+                    ),
+                    SvgPicture.asset(
+                      AppAssets.icTrophy,
+                      height: getPercentSize(scoreHeight, 23),
+                      width: getPercentSize(scoreHeight, 18),
+                    ),
+                  ],
+                ),
+                getTextWidget(
+                    Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w500, color: Colors.grey),
+                    'Sua pontuação',
+                    TextAlign.center,
+                    getPercentSize(scoreHeight, 12)),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      getTextWidget(
-                          Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontWeight: FontWeight.w600),
-                          score.toString(),
-                          TextAlign.center,
-                          getPercentSize(scoreHeight, 30)),
-                      SizedBox(
-                        width: getWidthPercentSize(context, 1.2),
-                      ),
-                      SvgPicture.asset(
-                        AppAssets.icTrophy,
-                        height: getPercentSize(scoreHeight, 23),
-                        width: getPercentSize(scoreHeight, 18),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(height: getPercentSize(scoreHeight, 8)),
-                  getTextWidget(
-                      Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontWeight: FontWeight.w500, color: Colors.grey),
-                      'Sua pontuação',
-                      TextAlign.center,
-                      getPercentSize(scoreHeight, 12)),
-
-                  SizedBox(height: getScreenPercentSize(context, 5)),
-                  // Visibility(child: SizedBox(height: getScreenPercentSize(context, 4),),visible: !isDetailView),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      getStarWidget(star, starSize, 0),
-                      SizedBox(width: getWidthPercentSize(context, 5)),
-                      getStarWidget(star, starSize, 1),
-                      SizedBox(width: getWidthPercentSize(context, 5)),
-                      getStarWidget(star, starSize, 2),
-                    ],
-                  ),
-                  // new Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      getHomeButton(themeProvider, context,
-                          '${getFolderName(context, colorTuple.item1.folderName!)}${AppAssets.restartIcon}',
-                          () {
-                        restartClick();
-                      }, isFolder: true),
-                      getHomeButton(
-                          themeProvider, context, AppAssets.scoreShareIcon, () {
-                        shareClick();
-                      }),
-                      getHomeButton(themeProvider, context,
-                          '${getFolderName(context, colorTuple.item1.folderName!)}${AppAssets.scoreHomeIcon}',
-                          () {
-                        homeClick();
-                      }, isFolder: true),
-                    ],
-                  ),
-
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: getButtonWidget(
-                  //           context, "Restart", colorTuple.item1.primaryColor,
-                  //           isBorder: true, () {
-                  //
-                  //
-                  //
-                  //         nextClick();
-                  //
-                  //
-                  //       },
-                  //           textColor: Theme.of(context).textTheme.bodyText1!.color,
-                  //           borderColor: Theme.of(context).textTheme.bodyText1!.color),
-                  //       flex: 1,
-                  //     ),
-                  //     Visibility(
-                  //         visible: colorTuple.item2 < defaultLevelSize,
-                  //         child: SizedBox(width: getHorizontalSpace(context))),
-                  //     Visibility(
-                  //       visible: colorTuple.item2 < defaultLevelSize,
-                  //       child: Expanded(
-                  //         child: Opacity(
-                  //           opacity: star >= 2 ? 1 : 0.5,
-                  //           child: getButtonWidget(
-                  //               context, "Next", colorTuple.item1.primaryColor, () {
-                  //             restartClick();
-                  //           }, textColor: Colors.black),
-                  //         ),
-                  //         flex: 1,
-                  //       ),
-                  //     )
-                  //   ],
-                  // )
-                ],
-              ),
-            )
-          ],
-        ),
+                SizedBox(height: getScreenPercentSize(context, 5)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    getStarWidget(star, starSize, 0),
+                    SizedBox(width: getWidthPercentSize(context, 5)),
+                    getStarWidget(star, starSize, 1),
+                    SizedBox(width: getWidthPercentSize(context, 5)),
+                    getStarWidget(star, starSize, 2),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    getHomeButton(themeProvider, context,
+                        '${getFolderName(context, colorTuple.item1.folderName!)}${AppAssets.restartIcon}',
+                        () {
+                      restartClick();
+                    }, isFolder: true),
+                    getHomeButton(
+                        themeProvider, context, AppAssets.scoreShareIcon, () {
+                      shareClick();
+                    }),
+                    getHomeButton(themeProvider, context,
+                        '${getFolderName(context, colorTuple.item1.folderName!)}${AppAssets.scoreHomeIcon}',
+                        () {
+                      homeClick();
+                    }, isFolder: true),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

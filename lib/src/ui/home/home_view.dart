@@ -51,8 +51,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     Future.delayed(Duration.zero, () {
       adsFile = AdsFile(context);
       adsFile!.createAnchoredBanner(context, onBannerAdLoaded: () {
-       debugPrint(
-            'HomeView: Banner ad loaded in AdsFile. Calling setState if mounted: $mounted');
         if (mounted) {
           setState(() {});
         }
@@ -62,17 +60,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     isGamePageOpen = false;
     animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 0));
-    bgColorTween =
-        ColorTween(begin: Colors.black, end: Color(0xFF212121)).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Interval(
-          0.8,
-          1.0,
-          curve: Curves.easeIn,
-        ),
-      ),
-    );
+    bgColorTween = ColorTween(begin: Colors.transparent, end: Colors.transparent).animate(animationController);
 
     elevationTween = Tween(begin: 0.0, end: 4.0).animate(
       CurvedAnimation(
@@ -124,8 +112,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         Tween(begin: 54.0, end: 136.0).animate(animationController);
     fillImageRightPositionTween =
         Tween(begin: -54.0, end: -240.0).animate(animationController);
-
-    // setState(() {}); // Geralmente não é necessário aqui se o build inicial já considera os valores
   }
 
   @override
@@ -180,7 +166,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         flex: 1,
                       ),
                       getSettingWidget(context, function: () {
-                       debugPrint("model====${themeMode}");
                         setState(() {
                           if (themeMode == ThemeMode.dark) {
                             tuple2!.item1.bgColor = "#383838".toColor();
@@ -188,8 +173,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             tuple2!.item1.bgColor =
                                 KeyUtil.bgColorList[tuple2!.item1.position];
                           }
-
-                         debugPrint("color====${tuple2!.item1.position}");
                         });
                       })
                     ],
@@ -356,7 +339,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       ),
       onTap: () {
         Navigator.pop(context);
-        GradientModel model = GradientModel(); // Removido 'new'
+        GradientModel model = GradientModel();
         model.primaryColor = tuple2!.item1.primaryColor;
         model.gridColor = tuple2!.item1.gridColor;
 
@@ -378,7 +361,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    animationController.dispose(); // Adicionado dispose para o controller
+    animationController.dispose();
     super.dispose();
     disposeBannerAd(adsFile);
   }

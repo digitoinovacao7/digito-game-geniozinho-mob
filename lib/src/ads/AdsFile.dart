@@ -13,8 +13,7 @@ class AdsFile implements AdsInterfaces {
   int _numRewardedLoadAttempts = 0;
   static const int _maxFailedLoadAttempts = 3;
 
-  AdsFile(BuildContext c) {
-    context = c;
+  AdsFile(this.context) {
     setDefaultData();
   }
 
@@ -35,7 +34,6 @@ class AdsFile implements AdsInterfaces {
    debugPrint("AdsInterfaces: Interstitial Ad Closed.");
   }
 
-  // MODIFICADO: Apenas um callback nomeado VoidCallback? onBannerAdLoaded
   Future<void> createAnchoredBanner(BuildContext context,
       {VoidCallback? onBannerAdLoaded}) async {
     final AnchoredAdaptiveBannerAdSize? size =
@@ -58,9 +56,9 @@ class AdsFile implements AdsInterfaces {
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
          debugPrint('$BannerAd loaded.');
-          _anchoredBanner = ad as BannerAd?; // Definir _anchoredBanner AQUI
+          _anchoredBanner = ad as BannerAd?;
           if (onBannerAdLoaded != null) {
-            onBannerAdLoaded(); // Chamar o callback para home_view.dart
+            onBannerAdLoaded();
           }
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
@@ -92,11 +90,10 @@ class AdsFile implements AdsInterfaces {
     }
   }
 
-  // DENTRO DA CLASSE AdsFile
-  void showInterstitialAd(Function function) { // 'function' é o seu callback de navegação
+  void showInterstitialAd(Function function) {
     if (_interstitialAd == null) {
      debugPrint('Warning: attempt to show interstitial before loaded.');
-      function(); // Navega se o anúncio não estiver carregado
+      function();
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -104,18 +101,18 @@ class AdsFile implements AdsInterfaces {
          debugPrint('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
        debugPrint('$ad onAdDismissedFullScreenContent.');
-        onAdClose(); // Chamada para a interface AdsInterfaces
+        onAdClose();
         ad.dispose();
         _interstitialAd = null;
-        createInterstitialAd(); // Pré-carrega o próximo anúncio
-        function(); // Navega após o anúncio ser dispensado
+        createInterstitialAd();
+        function();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _interstitialAd = null;
-        createInterstitialAd(); // Pré-carrega o próximo anúncio
-        function(); // <<< ADICIONAR ESTA LINHA PARA NAVEGAR MESMO SE A EXIBIÇÃO FALHAR
+        createInterstitialAd();
+        function();
       },
     );
     _interstitialAd!.show();
