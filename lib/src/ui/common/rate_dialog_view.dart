@@ -27,21 +27,6 @@ class RateViewDialog extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Align(
-          //   alignment: Alignment.topRight,
-          //   child:  GestureDetector(
-          //     onTap: (){
-          //       Navigator.pop(context, false);
-          //     },
-          //     child: SvgPicture.asset(
-          //       getFolderName(context, colorTuple.item1.folderName!)+AppAssets.closeIcon,
-          //
-          //       width: iconSize,
-          //       height: iconSize,
-          //     ),
-          //   ),
-          // ),
-
           Container(
             padding: EdgeInsets.symmetric(
                 horizontal: FetchPixels.getPixelWidth(80),
@@ -101,7 +86,7 @@ class RateViewDialog extends StatelessWidget {
             children: [
               Expanded(
                 child: getButtonWidget(
-                    context, "Cancelar", colorTuple.item1.primaryColor, () {
+                    context, "Cancelar", colorTuple.item1.primaryColor!, () {
                   Navigator.pop(context);
                 }, textColor: darken(KeyUtil.primaryColor1), isBorder: true),
                 flex: 1,
@@ -116,23 +101,11 @@ class RateViewDialog extends StatelessWidget {
                   if (rate >= 3) {
                     Navigator.pop(context);
 
-                    // if (feedbackController.value.text.isNotEmpty) {
-                    //   feedback = feedbackController.text.toString();
-                    // }
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => FeedbackScreen(),
                         ));
-
-                    // final Email email = Email(
-                    //   body: '',
-                    //   subject: 'App Feedback',
-                    //   recipients: ['john.doe@flutter.dev'],
-                    //   isHTML: false,
-                    // );
-                    // await FlutterEmailSender.send(email);
                   }
                 }, textColor: Colors.white),
                 flex: 1,

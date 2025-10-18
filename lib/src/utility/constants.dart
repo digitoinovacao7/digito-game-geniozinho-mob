@@ -55,14 +55,11 @@ double getScreenPercentSize(BuildContext context, double percent) {
 
 double getHorizontalSpace(BuildContext context) {
   FetchPixels(context);
-  // return getWidthPercentSize(context, 3.3);
   return FetchPixels.getPixelWidth(40);
-  // return getWidthPercentSize(context, 3.3);
 }
 
 double getVerticalSpace(BuildContext context) {
   return FetchPixels.getPixelHeight(37);
-  // return getScreenPercentSize(context, 3);
 }
 
 double getWidthPercentSize(BuildContext context, double percent) {
@@ -152,7 +149,6 @@ getDefaultDecorationWithGradient(
         : [
             BoxShadow(
                 color: bgColor!.withOpacity(0.1),
-                // color: bgColor!.withOpacity(0.3),
                 spreadRadius: 0,
                 blurRadius: 10,
                 offset: Offset(0, 3))
@@ -252,9 +248,9 @@ getHeaderWidget(BuildContext context, String title, String content,
 
 Widget getFooterWidget(
     BuildContext context,
-    String text, // O texto de copyright já virá formatado
+    String text,
     String url, {
-      Color? textColor, // Cor opcional para o texto
+      Color? textColor,
       EdgeInsets? padding,
     }) {
   final ThemeData theme = Theme.of(context);
@@ -263,35 +259,27 @@ Widget getFooterWidget(
 
   return Padding(
     padding: padding ?? EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 2), horizontal: getScreenPercentSize(context, 1)),
-    child: Center( // Centraliza o rodapé
-      child: InkWell( // InkWell para feedback visual ao tocar
+    child: Center(
+      child: InkWell(
         onTap: () async {
           if (await canLaunchUrlString(url)) {
             await launchUrlString(url);
           } else {
-            // Opcional: Mostrar um SnackBar ou logar um erro se não puder lançar a URL
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Não foi possível abrir o link: $url')),
             );
             debugPrint('Could not launch $url');
           }
         },
-        // Opcional: customizar o highlight e splash color
-        // highlightColor: theme.primaryColor.withOpacity(0.1),
-        // splashColor: theme.primaryColor.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(4), // Para que o splash fique contido
-        child: Padding( // Padding interno para o texto dentro do InkWell
+        borderRadius: BorderRadius.circular(4),
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           child: Text(
-            text, // Ex: "© 2023 Geniozinho. Todos os direitos reservados."
+            text,
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodySmall?.copyWith( // Usar um estilo de texto menor
+            style: theme.textTheme.bodySmall?.copyWith(
               color: effectiveTextColor,
-              // Opcional: Adicionar um leve sublinhado ou deixar sem
-              // textDecoration: TextDecoration.underline,
-              // textDecorationColor: effectiveTextColor.withOpacity(0.7),
-              // textDecorationStyle: TextDecorationStyle.dotted,
-            ) ?? TextStyle( // Fallback style
+            ) ?? TextStyle(
               fontSize: 15.0,
               color: effectiveTextColor,
             ),
@@ -307,13 +295,7 @@ getFolderName(BuildContext context, String folderName) {
     folderName = folderName.replaceAll("/", "");
     folderName = folderName + "Dark/";
   }
-
-//   if(kIsWeb){
-// return 'assets/${AppAssets.assetFolderPath}$folderName';
-//   }else{
   return AppAssets.assetFolderPath + folderName;
-
-  // }
 }
 
 getHintIcon({required Function function, Color? color, bool? isWhite}) {
@@ -337,17 +319,12 @@ getDefaultIconWidget(BuildContext context,
     bool? changeFolderName}) {
   double size = getScreenPercentSize(context, 3.5);
 
- debugPrint("folderName====$folder");
-
   if (folder != null && changeFolderName == null) {
     folder = getFolderName(context, folder);
-
-   debugPrint("folderqw---$folder---$icon");
   } else {
     folder = AppAssets.assetFolderPath + folder!;
   }
 
- debugPrint("folder====$folder---$icon");
   return InkWell(
     onTap: () {
       if (function != null) {
@@ -411,7 +388,6 @@ getNoneAppBar(BuildContext context,
 
 getTrophyIcon(BuildContext context) {
   double trophySize = FetchPixels.getPixelHeight(55);
-  // double trophySize = getScreenPercentSize(context, 3.5);
   return SvgPicture.asset(
     AppAssets.icCoin,
     width: trophySize,
@@ -428,12 +404,10 @@ getBackGroundColor(BuildContext context) {
 }
 
 getCommonBackGroundColor(BuildContext context) {
-  // ignore: unused_local_variable
   ThemeProvider themeProvider = Provider.of(context);
   Color bgColor = Colors.white;
   if (themeMode == ThemeMode.dark) {
     bgColor = "#000000".toColor();
-    // bgColor = "#353535".toColor();
   }
   return bgColor;
 }
@@ -508,7 +482,6 @@ getSettingWidget(BuildContext context, {Function? function}) {
         }
       });
     },
-    // borderRadius: BorderRadius.circular(24),
     child: SvgPicture.asset(
       AppAssets.setting,
       width: FetchPixels.getPixelHeight(60),
@@ -747,10 +720,6 @@ Widget getCommonMainWidget(
                                               : oldScore.toString(),
                                           TextAlign.center,
                                           getPercentSize(mainHeight, 6));
-                                      // return CommonScoreView(
-                                      //   currentScore: tuple2.item1.toInt(),
-                                      //   oldScore: tuple2.item2.toInt(),
-                                      // );
                                     }),
                               ],
                             ),
@@ -770,22 +739,10 @@ Widget getCommonMainWidget(
                   ],
                 ),
               ),
-
-              // Container(
-              //   width: double.infinity,
-              //   height: double.infinity,
-              //   child: child,
-              //   margin: EdgeInsets.only(top : getPercentSize(mainHeight, 50)),
-              // ),
             ],
           ),
         ),
       ),
-      // Container(
-      //   margin: EdgeInsets.only(top : mainHeight,
-      //   right: getHorizontalSpace(context),left: getHorizontalSpace(context)),
-      //   child: child,
-      // )
     ],
   );
 }
