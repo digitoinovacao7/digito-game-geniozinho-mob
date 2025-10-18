@@ -34,4 +34,38 @@ class Dashboard {
     required this.outlineIconColor,
     required this.backgroundColor,
   });
+
+  Dashboard copyWith({
+    String? title,
+    String? subtitle,
+    String? folder,
+    String? outlineIcon,
+    PuzzleType? puzzleType,
+    double? opacity,
+    Tuple2<Color, Color>? colorTuple,
+    Color? fillIconColor,
+    Color? outlineIconColor,
+    Color? bgColor,
+    Color? gridColor,
+    Color? backgroundColor,
+    Color? primaryColor,
+    int? position,
+  }) {
+    return Dashboard(
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
+      folder: folder ?? this.folder,
+      outlineIcon: outlineIcon ?? this.outlineIcon,
+      puzzleType: puzzleType ?? this.puzzleType,
+      opacity: opacity ?? this.opacity,
+      colorTuple: colorTuple ?? this.colorTuple,
+      fillIconColor: fillIconColor ?? this.fillIconColor,
+      outlineIconColor: outlineIconColor ?? this.outlineIconColor,
+      bgColor: bgColor ?? this.bgColor,
+      gridColor: gridColor ?? this.gridColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      primaryColor: primaryColor ?? this.primaryColor,
+      position: position ?? this.position,
+    );
+  }
 }
