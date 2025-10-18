@@ -35,6 +35,9 @@
         <true/>
     </dict>
 
+    <!-- iOS AdMob/ATT keys removed because this project will be released only for Android.
+         If you later add iOS support, add GADApplicationIdentifier and NSUserTrackingUsageDescription here. -->
+
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

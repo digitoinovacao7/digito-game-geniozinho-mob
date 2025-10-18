@@ -28,59 +28,48 @@ const String _iosTestInterstitialId = "ca-app-pub-3940256099942544/4411468910";
 const String _iosTestBannerId = "ca-app-pub-3940256099942544/2934735716";
 const String _iosTestRewardedId = "ca-app-pub-3940256099942544/1712485313";
 
+// NOTE: This project will be released ONLY for Android. The functions below
+// prioritize Android ad unit IDs in release and debug. If you later enable
+// iOS releases, set the iOS production IDs above and remove or adapt the
+// checks below.
 
 String getInterstitialAdUnitId() {
-  if (kReleaseMode) {
-    if (Platform.isIOS) {
-      return _iosProductionInterstitialId;
-    } else if (Platform.isAndroid) {
-      return _androidProductionInterstitialId;
-    }
-  } else { // MODO DEBUG
-    if (Platform.isIOS) {
-      return _iosTestInterstitialId;
-    } else if (Platform.isAndroid) {
-      return _androidTestInterstitialId;
-    }
+  // Prefer Android (target platform)
+  if (Platform.isAndroid) {
+    return kReleaseMode ? _androidProductionInterstitialId : _androidTestInterstitialId;
   }
+  // For iOS during development return test id; for release on non-Android return empty and warn
+  if (Platform.isIOS) {
+    if (!kReleaseMode) return _iosTestInterstitialId;
+    debugPrint('WARNING: Release target is Android; no iOS production interstitial ID configured.');
+    return "";
+  }
+  debugPrint('WARNING: Platform not supported for ads in this build (only Android targeted).');
   return "";
 }
 
 String getBannerAdUnitId() {
-  if (kReleaseMode) {
-    if (Platform.isIOS) {
-      return _iosProductionBannerId;
-    } else if (Platform.isAndroid) {
-      return _androidProductionBannerId;
-    }
-  } else {
-    if (Platform.isIOS) {
-      return _iosTestBannerId;
-    } else if (Platform.isAndroid) {
-      return _androidTestBannerId;
-    }
+  if (Platform.isAndroid) {
+    return kReleaseMode ? _androidProductionBannerId : _androidTestBannerId;
   }
+  if (Platform.isIOS) {
+    if (!kReleaseMode) return _iosTestBannerId;
+    debugPrint('WARNING: Release target is Android; no iOS production banner ID configured.');
+    return "";
+  }
+  debugPrint('WARNING: Platform not supported for ads in this build (only Android targeted).');
   return "";
 }
 
 String getRewardBasedVideoAdUnitId() {
-  if (kReleaseMode) {
-    if (Platform.isIOS) {
-      // ALERTA: ID de Recompensado de Produção para iOS não configurado.
-      if (_iosProductionRewardedId == "ca-app-pub-YOUR_IOS_PRODUCTION_REWARDED_ID") {
-        debugPrint("ALERTA: ID de Recompensado de Produção para iOS não configurado em AdsInfo.dart!");
-        return _iosTestRewardedId; // Fallback para teste para evitar crash
-      }
-      return _iosProductionRewardedId;
-    } else if (Platform.isAndroid) {
-      return _androidProductionRewardedId;
-    }
-  } else { // MODO DEBUG
-    if (Platform.isIOS) {
-      return _iosTestRewardedId;
-    } else if (Platform.isAndroid) {
-      return _androidTestRewardedId;
-    }
+  if (Platform.isAndroid) {
+    return kReleaseMode ? _androidProductionRewardedId : _androidTestRewardedId;
   }
+  if (Platform.isIOS) {
+    if (!kReleaseMode) return _iosTestRewardedId;
+    debugPrint('WARNING: Release target is Android; no iOS production rewarded ID configured.');
+    return "";
+  }
+  debugPrint('WARNING: Platform not supported for ads in this build (only Android targeted).');
   return "";
 }
