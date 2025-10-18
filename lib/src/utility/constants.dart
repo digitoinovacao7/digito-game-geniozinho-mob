@@ -250,45 +250,105 @@ Widget getFooterWidget(
     BuildContext context,
     String text,
     String url, {
-      Color? textColor,
-      EdgeInsets? padding,
-    }) {
-  final ThemeData theme = Theme.of(context);
-  final Color defaultTextColor = theme.textTheme.bodySmall?.color ?? theme.hintColor;
-  final effectiveTextColor = textColor ?? defaultTextColor;
+    Color? textColor,
+    EdgeInsets? padding,
+  }) {
+    final ThemeData theme = Theme.of(context);
+    final bool isDark = theme.brightness == Brightness.dark;
 
-  return Padding(
-    padding: padding ?? EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 2), horizontal: getScreenPercentSize(context, 1)),
-    child: Center(
-      child: InkWell(
-        onTap: () async {
-          if (await canLaunchUrlString(url)) {
-            await launchUrlString(url);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Não foi possível abrir o link: $url')),
-            );
-            debugPrint('Could not launch $url');
-          }
-        },
-        borderRadius: BorderRadius.circular(4),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: effectiveTextColor,
-            ) ?? TextStyle(
-              fontSize: 15.0,
-              color: effectiveTextColor,
-            ),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [
+                  Colors.black.withOpacity(0.05),
+                  Colors.black.withOpacity(0.02),
+                ]
+              : [
+                  const Color(0xFF4CAF50).withOpacity(0.05),
+                  Colors.white,
+                ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
       ),
-    ),
-  );
-}
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(
+            color: isDark
+                ? Colors.white.withOpacity(0.1)
+                : const Color(0xFF4CAF50).withOpacity(0.2),
+            thickness: 0.5,
+          ),
+          Padding(
+            padding: padding ??
+                EdgeInsets.symmetric(
+                  vertical: getScreenPercentSize(context, 1.5),
+                  horizontal: getScreenPercentSize(context, 3),
+                ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.copyright_rounded,
+                  size: 12,
+                  color: isDark
+                      ? Colors.white.withOpacity(0.7)
+                      : Colors.black.withOpacity(0.6),
+                ),
+                const SizedBox(width: 4),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: InkWell(
+                    onTap: () async {
+                      try {
+                        if (await canLaunchUrlString(url)) {
+                          await launchUrlString(url);
+                        } else {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Não foi possível abrir o link: $url',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: Colors.black87,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      } catch (e) {
+                        debugPrint('Erro ao abrir URL: $e');
+                      }
+                    },
+                    child: Text(
+                      text,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: isDark
+                            ? Colors.white.withOpacity(0.7)
+                            : Colors.black.withOpacity(0.6),
+                        fontSize: 11,
+                        letterSpacing: 0.3,
+                        height: 1.4,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
 getFolderName(BuildContext context, String folderName) {
   if (themeMode == ThemeMode.dark) {

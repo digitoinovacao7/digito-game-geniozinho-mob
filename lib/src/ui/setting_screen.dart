@@ -1,504 +1,215 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:share_plus/share_plus.dart';
-
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:geniozinho/src/core/app_constant.dart';
-import 'package:geniozinho/src/ui/common/rate_dialog_view.dart';
-import 'package:geniozinho/src/ui/model/gradient_model.dart';
-import 'package:geniozinho/src/ui/resizer/fetch_pixels.dart';
-import 'package:geniozinho/src/ui/resizer/widget_utils.dart';
-import 'package:geniozinho/src/utility/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tuple/tuple.dart';
-
-import '../core/app_assets.dart';
-import 'app/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'common/common_alert_dialog.dart';
+import '../core/app_assets.dart';
+import '../core/app_constant.dart';
+import '../ui/app/theme_provider.dart';
+import '../ui/common/common_alert_dialog.dart';
+import '../ui/common/rate_dialog_view.dart';
+import '../utility/constants.dart';
+import 'model/gradient_model.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
-
   @override
-  State<StatefulWidget> createState() {
-    return _SettingScreen();
-  }
+  _SettingScreenState createState() => _SettingScreenState();
 }
 
-class _SettingScreen extends State<SettingScreen> {
-  void backClicks() {
-    if (kIsWeb) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pop();
-      });
-    } else {
-      Navigator.of(context).pop();
-    }
-  }
-
-  ValueNotifier soundOn = ValueNotifier(false);
-  ValueNotifier darkMode = ValueNotifier(false);
-  ValueNotifier vibrateOn = ValueNotifier(false);
+class _SettingScreenState extends State<SettingScreen> {
+  Future<Map<String, bool>>? _settingsFuture;
 
   @override
   void initState() {
     super.initState();
-
-    getSpeakerVol();
+    _settingsFuture = _loadInitialSettings();
   }
 
-  getSpeakerVol() async {
-    soundOn.value = await getSound();
-    vibrateOn.value = await getVibration();
-    Future.delayed(Duration.zero, () {
-      darkMode.value = Theme.of(context).brightness != Brightness.light;
-    });
+  Future<Map<String, bool>> _loadInitialSettings() async {
+    final sound = await getSound();
+    final vibration = await getVibration();
+    final isDarkMode = themeMode == ThemeMode.dark;
+    return {
+      'sound': sound,
+      'vibration': vibration,
+      'darkMode': isDarkMode,
+    };
   }
 
-  double fontTitleSize = 30;
+  void backClicks() {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
-    FetchPixels(context);
-    int selection = 1;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyLarge?.color),
+          onPressed: backClicks,
+        ),
+        title: Text(
+          'Configurações',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: FutureBuilder<Map<String, bool>>(
+        future: _settingsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text("Erro ao carregar configurações"));
+          } else if (snapshot.hasData) {
+            return buildSettingsList(context, snapshot.data!);
+          } else {
+            return const Center(child: Text("Nenhuma configuração encontrada."));
+          }
+        },
+      ),
+    );
+  }
 
-    Widget verSpace = SizedBox(height: FetchPixels.getPixelHeight(35));
+  Widget buildSettingsList(BuildContext context, Map<String, bool> settings) {
+    final soundOn = ValueNotifier(settings['sound']!);
+    final vibrateOn = ValueNotifier(settings['vibration']!);
+    final darkMode = ValueNotifier(settings['darkMode']!);
 
-    double margin = getHorizontalSpace(context);
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      children: [
+        _buildSectionTitle(context, "Geral"),
+        _buildSwitchTile(
+          context: context,
+          title: "Som",
+          icon: Icons.volume_up_outlined,
+          notifier: soundOn,
+          onToggle: (val) {
+            soundOn.value = val;
+            setSound(val);
+          },
+        ),
+        _buildSwitchTile(
+          context: context,
+          title: "Vibração",
+          icon: Icons.vibration_outlined,
+          notifier: vibrateOn,
+          onToggle: (val) {
+            vibrateOn.value = val;
+            setVibration(val);
+          },
+        ),
+        const SizedBox(height: 16),
+        _buildSectionTitle(context, "Aparência"),
+        _buildSwitchTile(
+          context: context,
+          title: "Modo Escuro",
+          icon: Icons.brightness_4_outlined,
+          notifier: darkMode,
+          onToggle: (val) {
+            context.read<ThemeProvider>().changeTheme();
+            darkMode.value = val;
+          },
+        ),
+        const SizedBox(height: 16),
+        _buildSectionTitle(context, "Outros"),
+        _buildNavigationTile(context, "Compartilhar", Icons.share_outlined, () => share()),
+        _buildNavigationTile(context, "Avalie-nos", Icons.star_outline, () => _showRateDialog()),
+        _buildNavigationTile(context, "Feedback", Icons.feedback_outlined, () => _showFeedbackDialog()),
+        _buildNavigationTile(context, "Política de Privacidade", Icons.privacy_tip_outlined, () => _launchURL()),
+      ],
+    );
+  }
 
-    TextStyle theme = Theme.of(context).textTheme.titleSmall!;
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, bottom: 8.0, left: 16.0, right: 16.0),
+      child: Text(
+        title.toUpperCase(),
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).hintColor,
+            ),
+      ),
+    );
+  }
 
-    return WillPopScope(
-      child: Scaffold(
-        appBar: getNoneAppBar(context),
-        body: SafeArea(
+  Widget _buildSwitchTile({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required ValueNotifier<bool> notifier,
+    required Function(bool) onToggle,
+  }) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: notifier,
+      builder: (context, value, child) {
+        return InkWell(
+          onTap: () => onToggle(!value),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: margin),
-            child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: Row(
               children: [
-                SizedBox(
-                  height: getScreenPercentSize(context, 2),
+                Icon(icon, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Text(title, style: Theme.of(context).textTheme.titleMedium),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getDefaultIconWidget(context,
-                        icon: AppAssets.backIcon,
-                        folder: KeyUtil.themeYellowFolder, function: () {
-                      backClicks();
-                    }),
-                    Expanded(
-                        child: Center(
-                            child: getCustomFont(
-                                'Configurações', 35, theme.color!, 1,
-                                fontWeight: FontWeight.w600))),
-                  ],
+                const SizedBox(width: 16),
+                FlutterSwitch(
+                  value: value,
+                  inactiveColor: Theme.of(context).colorScheme.surfaceVariant,
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  width: 50.0,
+                  height: 30.0,
+                  toggleSize: 25.0,
+                  padding: 2.0,
+                  onToggle: onToggle,
                 ),
-                buildExpandedData(
-                  selection,
-                  verSpace,
-                  context,
-                )
               ],
             ),
           ),
-        ),
-      ),
-      onWillPop: () async {
-        backClicks();
-        return false;
-      },
-    );
-  }
-
-  Expanded buildExpandedData(
-    int selection,
-    Widget verSpace,
-    BuildContext context,
-  ) {
-    return Expanded(
-      child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: ListView(
-          primary: true,
-          shrinkWrap: true,
-          children: [
-            SizedBox(
-              height: FetchPixels.getPixelHeight(30),
-            ),
-            verSpace,
-            getTitleText("Som"),
-            verSpace,
-            SizedBox(
-              height: FetchPixels.getPixelHeight(125),
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: FetchPixels.getPixelWidth(30)),
-                      decoration: getDefaultDecoration(
-                          radius: FetchPixels.getPixelHeight(30),
-                          borderColor: Colors.grey,
-                          bgColor: null),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: getSubTitleFonts("Som"),
-                            flex: 1,
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: soundOn,
-                            builder: (context, value, child) {
-                              return FlutterSwitch(
-                                value: soundOn.value,
-                                inactiveColor:
-                                    lighten(KeyUtil.primaryColor1, 0.09),
-                                inactiveToggleColor: Colors.white,
-                                activeColor: KeyUtil.primaryColor1,
-                                width: FetchPixels.getPixelHeight(130),
-                                height: FetchPixels.getPixelHeight(75),
-                                onToggle: (val) {
-                                  soundOn.value = val;
-                                  setSound(val);
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                  getHorSpace(FetchPixels.getDefaultHorSpace(context)),
-                  Expanded(
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: FetchPixels.getPixelWidth(30)),
-                      decoration: getDefaultDecoration(
-                          radius: FetchPixels.getPixelHeight(30),
-                          borderColor: Colors.grey,
-                          bgColor: null),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: getSubTitleFonts("Vibração"),
-                            flex: 1,
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: vibrateOn,
-                            builder: (context, value, child) {
-                              return FlutterSwitch(
-                                value: vibrateOn.value,
-                                inactiveColor:
-                                    lighten(KeyUtil.primaryColor1, 0.09),
-                                inactiveToggleColor: Colors.white,
-                                activeColor: KeyUtil.primaryColor1,
-                                width: FetchPixels.getPixelHeight(130),
-                                height: FetchPixels.getPixelHeight(75),
-                                onToggle: (val) {
-                                  vibrateOn.value = val;
-                                  setVibration(val);
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                ],
-              ),
-            ),
-            verSpace,
-            getDivider(),
-            verSpace,
-            getTitleText("Tema"),
-            verSpace,
-            SizedBox(
-              height: FetchPixels.getPixelHeight(125),
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: FetchPixels.getPixelWidth(30)),
-                      decoration: getDefaultDecoration(
-                          radius: FetchPixels.getPixelHeight(30),
-                          borderColor: Colors.grey,
-                          bgColor: null),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: getSubTitleFonts("Modo escuro"),
-                            flex: 1,
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: darkMode,
-                            builder: (context, value, child) {
-                              return FlutterSwitch(
-                                value: darkMode.value,
-                                inactiveColor:
-                                    lighten(KeyUtil.primaryColor1, 0.09),
-                                inactiveToggleColor: Colors.white,
-                                activeColor: KeyUtil.primaryColor1,
-                                width: FetchPixels.getPixelHeight(130),
-                                height: FetchPixels.getPixelHeight(75),
-                                onToggle: (val) {
-                                  context.read<ThemeProvider>().changeTheme();
-                                  darkMode.value = val;
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                  getHorSpace(FetchPixels.getDefaultHorSpace(context)),
-                  Expanded(
-                    child: Container(),
-                    flex: 1,
-                  ),
-                ],
-              ),
-            ),
-            verSpace,
-            getDivider(),
-            getCell(
-                string: "Compartilhar",
-                function: () {
-                  share();
-                }),
-            getDivider(),
-            getCell(
-                string: "Avalie-nos",
-                function: () {
-                  // LaunchReview.launch();
-
-                  GradientModel model = new GradientModel();
-                  model.primaryColor = KeyUtil.primaryColor1;
-                  showDialog<bool>(
-                    context: context,
-                    builder: (newContext) => CommonAlertDialog(
-                      child: RateViewDialog(
-                        colorTuple: Tuple2(model, 0),
-                      ),
-                    ),
-                    barrierDismissible: false,
-                  );
-                }),
-            getDivider(),
-            getCell(
-                string: "Feedback",
-                function: () async {
-                  GradientModel model = new GradientModel();
-                  model.primaryColor = KeyUtil.primaryColor1;
-
-                  showDialog<bool>(
-                    context: context,
-                    builder: (newContext) => CommonAlertDialog(
-                      child: RateViewDialog(
-                        colorTuple: Tuple2(model, 0),
-                      ),
-                    ),
-                    barrierDismissible: false,
-                  );
-
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackScreen(),));
-                  // final Email email = Email(
-                  //   body: 'Math Matrix',
-                  //   subject: "Feedback",
-                  //   recipients: ['demo@gmail.com'],
-                  //   isHTML: false,
-                  // );
-                  // await FlutterEmailSender.send(email);
-                }),
-            getDivider(),
-            getCell(
-                string: "Política de Privacidade",
-                function: () async {
-                  _launchURL();
-                }),
-          ],
-        ),
-      ),
-      flex: 1,
-    );
-  }
-
-  _launchURL() async {
-    if (!await launchUrl(Uri.parse(privacyURL)))
-      throw 'Não foi possível iniciar $privacyURL';
-  }
-
-  share() async {
-    await Share.share(
-        getAppLink(),
-        subject: 'Gêniozinho');
-  }
-
-  getCell({required String string, required Function function}) {
-    return InkWell(
-      onTap: () {
-        function();
-      },
-      child: Container(
-        child: Row(
-          children: [
-            Expanded(
-              child: getTitleText(string),
-              flex: 1,
-            ),
-            Icon(Icons.navigate_next,
-                color: Theme.of(context).textTheme.titleSmall!.color)
-          ],
-        ),
-        margin: EdgeInsets.symmetric(vertical: FetchPixels.getPixelHeight(45)),
-      ),
-    );
-  }
-
-  Widget getDivider() {
-    return Container(
-      width: double.infinity,
-      // margin: EdgeInsets.symmetric(vertical: FetchPixels.getPixelHeight(50)),
-      color: Colors.grey.shade300,
-      height: 0.5,
-    );
-  }
-
-  Widget getSubTitleFonts(String titles) {
-    TextStyle theme = Theme.of(context).textTheme.titleSmall!;
-    return getCustomFont(titles, fontTitleSize, theme.color!, 1,
-        fontWeight: FontWeight.w500, textAlign: TextAlign.start);
-  }
-
-  getTitleText(String string) {
-    TextStyle theme = Theme.of(context).textTheme.titleSmall!;
-
-    // return getCustomFont(
-    //   string,
-    //   52,
-    //   Colors.black,
-    //   1,
-    //   fontWeight: FontWeight.bold,
-    // );
-    return getCustomFont(string, 30, theme.color!, 1,
-        fontWeight: FontWeight.w600);
-  }
-}
-
-class SliderThumbShape extends SliderComponentShape {
-  /// Create a slider thumb that draws a circle.
-
-  SliderThumbShape(
-    this.setColor, {
-    this.enabledThumbRadius = 7.5,
-    this.disabledThumbRadius,
-    this.elevation = 1.0,
-    this.pressedElevation = 6.0,
-  });
-
-  /// The preferred radius of the round thumb shape when the slider is enabled.
-  ///
-  /// If it is not provided, then the material default of 10 is used.
-  ///
-  Color setColor = Colors.white;
-  final double? enabledThumbRadius;
-
-  /// The preferred radius of the round thumb shape when the slider is disabled.
-  ///
-  /// If no disabledRadius is provided, then it is equal to the
-  /// [enabledThumbRadius]
-  final double? disabledThumbRadius;
-
-  double? get _disabledThumbRadius => disabledThumbRadius ?? enabledThumbRadius;
-
-  /// The resting elevation adds shadow to the unpressed thumb.
-  ///
-  /// The default is 1.
-  ///
-  /// Use 0 for no shadow. The higher the value, the larger the shadow. For
-  /// example, a value of 12 will create a very large shadow.
-  ///
-  final double elevation;
-
-  /// The pressed elevation adds shadow to the pressed thumb.
-  ///
-  /// The default is 6.
-  ///
-  /// Use 0 for no shadow. The higher the value, the larger the shadow. For
-  /// example, a value of 12 will create a very large shadow.
-  final double pressedElevation;
-
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return Size.fromRadius(
-        isEnabled == true ? enabledThumbRadius! : _disabledThumbRadius!);
-  }
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset center, {
-    Animation<double>? activationAnimation,
-    @required Animation<double>? enableAnimation,
-    bool? isDiscrete,
-    TextPainter? labelPainter,
-    RenderBox? parentBox,
-    @required SliderThemeData? sliderTheme,
-    TextDirection? textDirection,
-    double? value,
-    double? textScaleFactor,
-    Size? sizeWithOverflow,
-  }) {
-    assert(enableAnimation != null);
-    assert(sliderTheme != null);
-    assert(sliderTheme!.disabledThumbColor != null);
-    assert(sliderTheme!.thumbColor != null);
-    assert(!sizeWithOverflow!.isEmpty);
-
-    final Canvas canvas = context.canvas;
-    final Tween<double> radiusTween = Tween<double>(
-      begin: _disabledThumbRadius,
-      end: enabledThumbRadius,
-    );
-
-    final double radius = radiusTween.evaluate(enableAnimation!);
-
-    {
-      Paint paint = Paint()..color = Colors.white;
-      paint.strokeWidth = 5;
-      paint.style = PaintingStyle.stroke;
-      canvas.drawCircle(
-        center,
-        radius,
-        paint,
-      );
-      {
-        Paint paint = Paint()..color = setColor;
-        paint.style = PaintingStyle.fill;
-        canvas.drawCircle(
-          center,
-          radius,
-          paint,
         );
-      }
+      },
+    );
+  }
+
+  Widget _buildNavigationTile(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium),
+      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+      onTap: onTap,
+    );
+  }
+
+  void _showRateDialog() {
+    GradientModel model = GradientModel()..primaryColor = KeyUtil.primaryColor1;
+    showDialog(
+      context: context,
+      builder: (newContext) => CommonAlertDialog(
+        child: RateViewDialog(colorTuple: Tuple2(model, 0)),
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  void _showFeedbackDialog() {
+    _showRateDialog();
+  }
+
+  void _launchURL() async {
+    if (!await launchUrl(Uri.parse(privacyURL))) {
+      throw 'Não foi possível iniciar $privacyURL';
     }
+  }
+
+  void share() async {
+    await Share.share(getAppLink(), subject: 'Gêniozinho');
   }
 }
