@@ -13,9 +13,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "br.com.digitoinovacao.geniozinho"
-    compileSdk = 36
-
-    ndkVersion = "27.0.12077973"
+    compileSdk 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -53,6 +51,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+    }
+
+    packagingOptions {
+        doNotStrip "**/*.so"
     }
 
     bundle {
