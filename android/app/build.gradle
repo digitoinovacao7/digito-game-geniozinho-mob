@@ -54,10 +54,6 @@ android {
         }
     }
 
-    packagingOptions {
-        doNotStrip "**/*.so"
-    }
-
     bundle {
         language {
             enableSplit = true
