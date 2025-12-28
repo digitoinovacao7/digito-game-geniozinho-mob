@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'AdsInfo.dart';
 import 'ads_interface.dart';
@@ -63,6 +64,15 @@ class AdsFile implements AdsInterfaces {
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
          debugPrint('$BannerAd failedToLoad: $error');
+          Fluttertoast.showToast(
+              msg: "Banner Error: ${error.code} - ${error.message}",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
           ad.dispose();
         },
         onAdOpened: (Ad ad) =>debugPrint('$BannerAd onAdOpened.'),
@@ -169,6 +179,12 @@ class AdsFile implements AdsInterfaces {
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('RewardedAd failed to load: $error');
+            Fluttertoast.showToast(
+                msg: "Rewarded Error: ${error.code}",
+                toastLength: Toast.LENGTH_LONG,
+                backgroundColor: Colors.red,
+                textColor: Colors.white
+            );
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= _maxFailedLoadAttempts) {
@@ -201,6 +217,12 @@ class AdsFile implements AdsInterfaces {
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error.');
+            Fluttertoast.showToast(
+                msg: "Interstit. Error: ${error.code}",
+                toastLength: Toast.LENGTH_LONG,
+                backgroundColor: Colors.red,
+                textColor: Colors.white
+            );
             _interstitialAd = null;
             _numInterstitialLoadAttempts += 1;
             if (_numInterstitialLoadAttempts <= _maxFailedLoadAttempts) {
