@@ -6,6 +6,8 @@ import 'package:geniozinho/src/core/app_theme.dart';
 import 'package:geniozinho/src/core/app_routes.dart';
 import 'package:geniozinho/src/ui/app/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:geniozinho/generated/l10n.dart';
 
 class MyApp extends StatelessWidget {
   final String fontFamily = "Montserrat";
@@ -35,6 +37,13 @@ class MyApp extends StatelessWidget {
         initialRoute: KeyUtil.splash,
         routes: appRoutes,
         navigatorObservers: [observer],
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
       );
     });
   }

@@ -53,13 +53,41 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Select Difficulty`
+  String get selectDifficulty {
+    return Intl.message(
+      'Select Difficulty',
+      name: 'selectDifficulty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easy`
+  String get easy {
+    return Intl.message('Easy', name: 'easy', desc: '', args: []);
+  }
+
+  /// `Medium`
+  String get medium {
+    return Intl.message('Medium', name: 'medium', desc: '', args: []);
+  }
+
+  /// `Hard`
+  String get hard {
+    return Intl.message('Hard', name: 'hard', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
+    ];
   }
 
   @override
