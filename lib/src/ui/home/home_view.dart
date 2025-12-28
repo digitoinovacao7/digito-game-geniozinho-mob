@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geniozinho/generated/l10n.dart';
 import 'package:geniozinho/src/ads/AdsFile.dart';
 import 'package:geniozinho/src/data/models/dashboard.dart';
 import 'package:geniozinho/src/ui/dashboard/dashboard_provider.dart';
@@ -276,7 +277,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               .textTheme
                               .titleMedium!
                               .copyWith(fontWeight: FontWeight.w600),
-                          "Selecione a dificuldade",
+                          S.of(context).selectDifficulty,
                           TextAlign.center,
                           getScreenPercentSize(context, 2)),
                       Container(
@@ -285,9 +286,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         margin: EdgeInsets.symmetric(
                             vertical: margin, horizontal: 5),
                       ),
-                      getCell('Fácil', true, easyQuiz, themeProvider),
-                      getCell('Médio', false, mediumQuiz, themeProvider),
-                      getCell('Dificil', false, hardQuiz, themeProvider),
+                      getCell(S.of(context).easy, true, easyQuiz, themeProvider),
+                      getCell(S.of(context).medium, false, mediumQuiz, themeProvider),
+                      getCell(S.of(context).hard, false, hardQuiz, themeProvider),
                       SizedBox(
                         height: margin,
                       ),
