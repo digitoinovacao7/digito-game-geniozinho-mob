@@ -8,9 +8,9 @@ AdRequest request = AdRequest(
   nonPersonalizedAds: true,
 );
 
-// ANDROID
-const String _androidProductionInterstitialId = "ca-app-pub-9124633416063149/6643124577";
-const String _androidProductionBannerId = "ca-app-pub-9124633416063149/8913865007";
+// ANDROID - Production Ad Unit IDs (without partner bidding)
+const String _androidProductionInterstitialId = "ca-app-pub-9124633416063149/1059603595";
+const String _androidProductionBannerId = "ca-app-pub-9124633416063149/6485166570";
 const String _androidProductionRewardedId = "ca-app-pub-9124633416063149/4629586741";
 
 // IOS (Preencha com seus IDs de produção do AdMob para iOS se for lançar para iOS)

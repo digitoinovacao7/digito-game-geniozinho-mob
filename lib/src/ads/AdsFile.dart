@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'AdsInfo.dart';
 import 'ads_interface.dart';
@@ -64,15 +63,23 @@ class AdsFile implements AdsInterfaces {
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
          debugPrint('$BannerAd failedToLoad: $error');
-          Fluttertoast.showToast(
-              msg: "Banner Error: ${error.code} - ${error.message}",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0
-          );
+         debugPrint('Banner Error Details - Code: ${error.code}, Domain: ${error.domain}, Message: ${error.message}');
+          
+          // Error code 3 = NO_FILL (no ads available) - this is common and expected
+          // HTTP 403 errors may indicate app/ad unit configuration issues in AdMob
+          if (error.code == 3) {
+            debugPrint('Banner NO_FILL: No ads available at this time (normal)');
+          } else if (error.message.contains('403') || error.message.contains('Forbidden')) {
+            debugPrint('⚠️ HTTP 403 ERROR - Possible causes:');
+            debugPrint('  1. App not yet approved in AdMob console');
+            debugPrint('  2. Package name mismatch (should be: br.com.digitoinovacao.geniozinho)');
+            debugPrint('  3. Ad unit not properly linked to app in AdMob');
+            debugPrint('  4. App needs to be published or added as test app');
+            debugPrint('  5. AdMob account has payment/policy issues');
+            debugPrint('  → Check AdMob console: https://apps.admob.com/');
+          } else {
+            debugPrint('Unexpected BannerAd error: ${error.code} - ${error.message}');
+          }
           ad.dispose();
         },
         onAdOpened: (Ad ad) =>debugPrint('$BannerAd onAdOpened.'),
@@ -179,12 +186,17 @@ class AdsFile implements AdsInterfaces {
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('RewardedAd failed to load: $error');
-            Fluttertoast.showToast(
-                msg: "Rewarded Error: ${error.code}",
-                toastLength: Toast.LENGTH_LONG,
-                backgroundColor: Colors.red,
-                textColor: Colors.white
-            );
+            print('Rewarded Error Details - Code: ${error.code}, Domain: ${error.domain}, Message: ${error.message}');
+            
+            // Error code 3 = NO_FILL (no ads available) - this is common and expected
+            if (error.code == 3) {
+              debugPrint('Rewarded NO_FILL: No ads available at this time (normal)');
+            } else if (error.message.contains('403') || error.message.contains('Forbidden')) {
+              debugPrint('⚠️ HTTP 403 ERROR on Rewarded - Check AdMob configuration');
+            } else {
+              debugPrint('Unexpected RewardedAd error: ${error.code} - ${error.message}');
+            }
+            
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= _maxFailedLoadAttempts) {
@@ -217,12 +229,17 @@ class AdsFile implements AdsInterfaces {
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error.');
-            Fluttertoast.showToast(
-                msg: "Interstit. Error: ${error.code}",
-                toastLength: Toast.LENGTH_LONG,
-                backgroundColor: Colors.red,
-                textColor: Colors.white
-            );
+            print('Interstitial Error Details - Code: ${error.code}, Domain: ${error.domain}, Message: ${error.message}');
+            
+            // Error code 3 = NO_FILL (no ads available) - this is common and expected
+            if (error.code == 3) {
+              debugPrint('Interstitial NO_FILL: No ads available at this time (normal)');
+            } else if (error.message.contains('403') || error.message.contains('Forbidden')) {
+              debugPrint('⚠️ HTTP 403 ERROR on Interstitial - Check AdMob configuration');
+            } else {
+              debugPrint('Unexpected InterstitialAd error: ${error.code} - ${error.message}');
+            }
+            
             _interstitialAd = null;
             _numInterstitialLoadAttempts += 1;
             if (_numInterstitialLoadAttempts <= _maxFailedLoadAttempts) {
