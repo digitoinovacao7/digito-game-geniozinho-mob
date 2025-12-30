@@ -23,6 +23,7 @@ class AdsFile implements AdsInterfaces {
   }
 
   BannerAd? _anchoredBanner;
+  AnchoredAdaptiveBannerAdSize? _cachedBannerSize;
 
   @override
   void onAdLoad(InterstitialAd interstitialAds) {
@@ -36,18 +37,28 @@ class AdsFile implements AdsInterfaces {
 
   Future<void> createAnchoredBanner(BuildContext context,
       {VoidCallback? onBannerAdLoaded}) async {
-    final AnchoredAdaptiveBannerAdSize? size =
-        await AdSize.getAnchoredAdaptiveBannerAdSize(
-      Orientation.portrait,
-      MediaQuery.of(context).size.width.truncate(),
-    );
-
+    // Use cached size if available
+    AnchoredAdaptiveBannerAdSize? size = _cachedBannerSize;
+    
     if (size == null) {
-     debugPrint('Unable to get height of anchored banner.');
-      return;
+      size = await AdSize.getAnchoredAdaptiveBannerAdSize(
+        Orientation.portrait,
+        MediaQuery.of(context).size.width.truncate(),
+      );
+      
+      if (size == null) {
+       debugPrint('Unable to get height of anchored banner.');
+        return;
+      }
+      
+      // Cache the size for future use
+      _cachedBannerSize = size;
+     debugPrint('Banner size acquired and cached: ${size.width}x${size.height}');
+    } else {
+     debugPrint('Using cached banner size: ${size.width}x${size.height}');
     }
+    
    debugPrint('Banner Ad Unit ID: ${getBannerAdUnitId()}');
-   debugPrint('Banner size acquired: ${size.width}x${size.height}');
 
     final BannerAd banner = BannerAd(
       size: size,
@@ -104,7 +115,16 @@ class AdsFile implements AdsInterfaces {
   void disposeBannerAd() {
     if (_anchoredBanner != null) {
       _anchoredBanner!.dispose();
+      _anchoredBanner = null;
     }
+  }
+
+  /// Dispose all ads at once (useful for app lifecycle management)
+  void disposeAllAds() {
+    disposeInterstitialAd();
+    disposeRewardedAd();
+    disposeBannerAd();
+    debugPrint('All ads disposed for lifecycle management');
   }
 
   void showInterstitialAd(Function function) {
@@ -200,8 +220,7 @@ class AdsFile implements AdsInterfaces {
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= _maxFailedLoadAttempts) {
-              int retryDelay =
-                  Duration(seconds: 2 * _numRewardedLoadAttempts).inSeconds;
+              final retryDelay = 2 * _numRewardedLoadAttempts;
               print(
                   'Retrying RewardedAd in $retryDelay seconds (attempt $_numRewardedLoadAttempts)');
               Future.delayed(Duration(seconds: retryDelay), () {
@@ -243,8 +262,7 @@ class AdsFile implements AdsInterfaces {
             _interstitialAd = null;
             _numInterstitialLoadAttempts += 1;
             if (_numInterstitialLoadAttempts <= _maxFailedLoadAttempts) {
-              int retryDelay =
-                  Duration(seconds: 2 * _numInterstitialLoadAttempts).inSeconds;
+              final retryDelay = 2 * _numInterstitialLoadAttempts;
               print(
                   'Retrying InterstitialAd in $retryDelay seconds (attempt $_numInterstitialLoadAttempts)');
               Future.delayed(Duration(seconds: retryDelay), () {
@@ -315,9 +333,7 @@ Widget showBanner(BuildContext context, AdsFile adsFile) {
   if (banner != null) {
     print(
         'AdsFile - showBanner: Banner is not null. Height: ${banner.size.height}');
-    return Container(
-      color: Colors.yellow, // MANTENHA PARA TESTE VISUAL
-      alignment: Alignment.center,
+    return SizedBox(
       height: banner.size.height.toDouble(),
       child: AdWidget(ad: banner),
     );
