@@ -61,15 +61,16 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
     this.isTimer = (isTimer == null) ? true : isTimer;
     adsFile = new AdsFile(c);
 
-    adsFile.createInterstitialAd();
+    // Preload ads for better performance
+    adsFile.preloadAds();
    debugPrint("isTimer12===$isTimer");
   }
 
   @override
   void dispose() {
-    disposeRewardedAd(adsFile);
+    // Dispose all ads properly to prevent memory leaks
+    adsFile.disposeAllAds();
     WidgetsBinding.instance.removeObserver(this);
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -168,27 +169,30 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
   bool isSecondClick = false;
 
   void wrongDualAnswer(bool isFirst) {
+    bool shouldNotify = false;
+    
     if (isFirst) {
       if (score1 > 0) {
         score1--;
-        notifyListeners();
+        shouldNotify = true;
       } else if (score1 == 0 && isSecondClick && score2 <= 0) {
         dialogType = DialogType.over;
         pauseTimer();
-        notifyListeners();
-      } else {
-        notifyListeners();
+        shouldNotify = true;
       }
-    } else {}
+    }
+    
     if (score2 > 0) {
       score2--;
-      notifyListeners();
+      shouldNotify = true;
     } else if (score2 == 0 && isFirstClick && score1 <= 0) {
       dialogType = DialogType.over;
-
       pauseTimer();
-      notifyListeners();
-    } else {
+      shouldNotify = true;
+    }
+    
+    // Call notifyListeners only once at the end
+    if (shouldNotify) {
       notifyListeners();
     }
   }

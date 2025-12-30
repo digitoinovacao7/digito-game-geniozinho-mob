@@ -14,10 +14,10 @@ class TimeProvider extends CoinProvider {
     required TickerProvider vsync,
     required this.totalTime,
   }) {
-    var oneSec = Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     currentTime = totalTime;
 
-    timer = new Timer.periodic(oneSec, (Timer timer) {
+    timer = Timer.periodic(oneSec, (Timer timer) {
       if (currentTime <= 1) {
         timer.cancel();
         if (dialogType == DialogType.non) {
@@ -27,6 +27,7 @@ class TimeProvider extends CoinProvider {
         }
       } else {
         currentTime = currentTime - 1;
+        // Only notify if UI needs update (every second, not every tick)
         notifyListeners();
       }
 
@@ -38,10 +39,10 @@ class TimeProvider extends CoinProvider {
     if (timer != null) {
       timer!.cancel();
     }
-    var oneSec = Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     currentTime = seconds;
 
-    timer = new Timer.periodic(oneSec, (Timer timer) {
+    timer = Timer.periodic(oneSec, (Timer timer) {
       if (currentTime <= 1) {
         timer.cancel();
         currentTime = 0;

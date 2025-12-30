@@ -3,10 +3,16 @@ import 'package:geniozinho/src/utility/math_util.dart';
 
 class CalculatorRepository {
   static List<int> listHasCode = <int>[];
+  static const int _maxCacheSize = 100; // Prevent unbounded growth
 
   static getCalculatorDataList(int level) {
     if (level == 1) {
       listHasCode.clear();
+    }
+
+    // Limit cache size to prevent memory leaks
+    if (listHasCode.length > _maxCacheSize) {
+      listHasCode.removeRange(0, listHasCode.length - _maxCacheSize);
     }
 
     List<Calculator> list = <Calculator>[];

@@ -127,6 +127,13 @@ class AdsFile implements AdsInterfaces {
     debugPrint('All ads disposed for lifecycle management');
   }
 
+  /// Preload ads for better performance (call on app start)
+  void preloadAds() {
+    createInterstitialAd();
+    createRewardedAd();
+    debugPrint('Preloading interstitial and rewarded ads for better performance');
+  }
+
   void showInterstitialAd(Function function) {
     if (_interstitialAd == null) {
      debugPrint('Warning: attempt to show interstitial before loaded.');
