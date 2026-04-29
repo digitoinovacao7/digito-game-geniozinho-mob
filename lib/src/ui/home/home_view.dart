@@ -201,7 +201,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               crossAxisSpacing: _crossAxisSpacing,
-                              mainAxisSpacing: _crossAxisSpacing,
+                              mainAxisSpacing: _crossAxisSpacing * 1.8,
                               primary: false,
                               padding: EdgeInsets.only(
                                   top: getScreenPercentSize(context, 4)),
