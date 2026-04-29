@@ -129,7 +129,8 @@ class _DashboardViewState extends State<DashboardView>
                   height: getScreenPercentSize(context, 5),
                 ),
                 Expanded(
-                  child: Column(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
                     children: [
                       DashboardButtonView(
                         position: _positionAnimation1,
@@ -147,6 +148,7 @@ class _DashboardViewState extends State<DashboardView>
                           );
                         },
                       ),
+                      const SizedBox(height: 16),
                       DashboardButtonView(
                         position: _positionAnimation2,
                         dashboard: KeyUtil.dashboardItems[1],
@@ -163,6 +165,7 @@ class _DashboardViewState extends State<DashboardView>
                           );
                         },
                       ),
+                      const SizedBox(height: 16),
                       DashboardButtonView(
                         position: _positionAnimation3,
                         dashboard: KeyUtil.dashboardItems[2],
