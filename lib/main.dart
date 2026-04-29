@@ -18,14 +18,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Configure AdMob test device IDs in debug mode to avoid serving real ads
-  if (!kReleaseMode) {
-    // 'EMULATOR' is a special value recognized by the plugin for the Android emulator.
-    await MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(testDeviceIds: <String>['EMULATOR']),
-    );
-    debugPrint('AdMob: test device IDs configured (debug mode)');
-  }
+  // Configure AdMob for Families Policy and test devices
+  await MobileAds.instance.updateRequestConfiguration(
+    RequestConfiguration(
+      testDeviceIds: kReleaseMode ? <String>[] : <String>['EMULATOR'],
+      tagForChildDirectedTreatment: TagForChildDirectedTreatment.yes,
+      tagForUnderAgeOfConsent: TagForUnderAgeOfConsent.yes,
+      maxAdContentRating: MaxAdContentRating.g,
+    ),
+  );
   await MobileAds.instance.initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
 

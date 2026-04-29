@@ -104,9 +104,23 @@ class _DashboardButtonViewState extends State<DashboardButtonView>
                           Positioned.fill(
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
-                              child: SvgPicture.asset(
-                                backgroundSvgPath,
-                                fit: BoxFit.fill,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    widget.dashboard.colorTuple.item1,
+                                    widget.dashboard.colorTuple.item2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: widget.dashboard.colorTuple.item1.withOpacity(0.4),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -162,9 +176,9 @@ class _DashboardButtonViewState extends State<DashboardButtonView>
                                         duration: const Duration(milliseconds: 200),
                                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: _isPressed ? Colors.black87 : Colors.black,
+                                          color: widget.dashboard.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white : Colors.black87,
                                           fontSize: getPercentSize(height, 14),
-                                          fontFamily: 'Latinotype',
+                                          fontFamily: 'Poppins',
                                           letterSpacing: 0.5,
                                         ),
                                         child: Text(
@@ -178,9 +192,9 @@ class _DashboardButtonViewState extends State<DashboardButtonView>
                                         AnimatedDefaultTextStyle(
                                           duration: const Duration(milliseconds: 200),
                                           style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                            color: _isPressed ? Colors.black54 : Colors.black45,
+                                            color: widget.dashboard.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white70 : Colors.black54,
                                             fontSize: getPercentSize(height, 10),
-                                            fontFamily: 'Montserrat',
+                                            fontFamily: 'Poppins',
                                           ),
                                           child: Text(
                                             widget.dashboard.subtitle,

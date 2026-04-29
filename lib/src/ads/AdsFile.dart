@@ -12,6 +12,9 @@ class AdsFile implements AdsInterfaces {
   int _numInterstitialLoadAttempts = 0;
   int _numRewardedLoadAttempts = 0;
   static const int _maxFailedLoadAttempts = 3;
+  
+  static DateTime? _lastInterstitialTime;
+  static const Duration _interstitialCooldown = Duration(minutes: 3);
 
   AdsFile(this.context) {
     setDefaultData();
@@ -140,9 +143,20 @@ class AdsFile implements AdsInterfaces {
       function();
       return;
     }
+
+    final now = DateTime.now();
+    if (_lastInterstitialTime != null &&
+        now.difference(_lastInterstitialTime!) < _interstitialCooldown) {
+      debugPrint('AdMob Ad Capping: Interstitial skipped (cooldown active).');
+      function();
+      return;
+    }
+
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-         debugPrint('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (InterstitialAd ad) {
+        debugPrint('ad onAdShowedFullScreenContent.');
+        _lastInterstitialTime = DateTime.now();
+      },
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
        debugPrint('$ad onAdDismissedFullScreenContent.');
         onAdClose();

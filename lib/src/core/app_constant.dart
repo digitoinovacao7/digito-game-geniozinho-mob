@@ -23,6 +23,7 @@ enum GameCategoryType {
   CUBE_ROOT,
   CONCENTRATION,
   NUMERIC_MEMORY,
+  LOGIC_BALANCE,
 }
 
 enum PuzzleType { MATH_PUZZLE, MEMORY_PUZZLE, BRAIN_PUZZLE }
@@ -70,6 +71,7 @@ class KeyUtil {
   static const String mathGrid = 'MathGrid';
   static const String numberPyramid = "NumberPyramid";
   static const String numericMemory = "numericMemory";
+  static const String logicBalance = "logicBalance";
   static Color primaryColor1 = "#FFCB43".toColor();
   static Color bgColor1 = "#FFF2D5".toColor();
   static Color backgroundColor1 = "#FFDB7C".toColor();
@@ -187,6 +189,8 @@ class KeyUtil {
 
       case GameCategoryType.NUMERIC_MEMORY:
         return numericMemoryTimeOut;
+      case GameCategoryType.LOGIC_BALANCE:
+        return logicBalanceTimeOut;
     }
   }
 
@@ -230,6 +234,8 @@ class KeyUtil {
 
       case GameCategoryType.NUMERIC_MEMORY:
         return numericMemoryScore;
+      case GameCategoryType.LOGIC_BALANCE:
+        return logicBalanceScore;
     }
   }
 
@@ -273,6 +279,8 @@ class KeyUtil {
 
       case GameCategoryType.NUMERIC_MEMORY:
         return numericMemoryScoreMinus;
+      case GameCategoryType.LOGIC_BALANCE:
+        return logicBalanceScoreMinus;
     }
   }
 
@@ -315,6 +323,8 @@ class KeyUtil {
         return complexCalculationCoin;
       case GameCategoryType.NUMERIC_MEMORY:
         return numericMemoryCoin;
+      case GameCategoryType.LOGIC_BALANCE:
+        return logicBalanceCoin;
     }
   }
 
@@ -428,7 +438,11 @@ class KeyUtil {
   static double truFalseCoin = 1;
   static double dualGameCoin = 1;
   static double complexCalculationCoin = 1;
-  static double numericMemoryCoin = 1;
+  static double numericMemoryCoin = 0.5;
+  static int logicBalanceTimeOut = 20;
+  static double logicBalanceScore = 1;
+  static double logicBalanceScoreMinus = -1;
+  static double logicBalanceCoin = 0.5;
 }
 
 extension ColorExtension on String {

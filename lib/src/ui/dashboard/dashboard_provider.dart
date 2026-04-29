@@ -200,6 +200,16 @@ class DashboardProvider extends CoinProvider {
           getScoreboard(keyNumericMemory),
           AppAssets.icNumericMemory,
         ));
+
+        list.add(GameCategory(
+          19,
+          "Balança da Lógica",
+          keyLogicBalance,
+          GameCategoryType.LOGIC_BALANCE,
+          KeyUtil.logicBalance,
+          getScoreboard(keyLogicBalance),
+          AppAssets.icPicturePuzzle,
+        ));
         break;
     }
     return _list;

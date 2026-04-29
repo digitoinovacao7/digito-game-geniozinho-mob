@@ -37,6 +37,7 @@ String keyMagicTriangle = "magic_triangle";
 String keyPicturePuzzle = "picture_puzzle";
 String keyNumberPyramid = "number_pyramid";
 String keyNumericMemory = "numeric_memory";
+String keyLogicBalance = "logic_balance";
 String fontFamily = "Montserrat";
 
 String fontFamily1 = "Poppins";

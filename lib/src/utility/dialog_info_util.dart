@@ -172,6 +172,15 @@ class DialogInfoUtil {
           correctAnswerScore: KeyUtil.numberPyramidScore,
           wrongAnswerScore: KeyUtil.numberPyramidScore,
         );
+      case GameCategoryType.LOGIC_BALANCE:
+        return GameInfoDialog(
+          title: "Balança da Lógica",
+          colorTuple: tuple3,
+          image: "assets/gif/picture-puzzle-intro.gif",
+          dec: "Descubra o peso do item com base no equilíbrio das equações.",
+          correctAnswerScore: KeyUtil.logicBalanceScore,
+          wrongAnswerScore: KeyUtil.logicBalanceScoreMinus,
+        );
     }
   }
 }

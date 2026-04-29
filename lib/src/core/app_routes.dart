@@ -20,6 +20,7 @@ import 'package:geniozinho/src/ui/quickCalculation/quick_calculation_view.dart';
 import 'package:geniozinho/src/ui/splash/splash_view.dart';
 import 'package:geniozinho/src/ui/squareRoot/square_root_view.dart';
 import 'package:geniozinho/src/ui/guessTheSign/guess_sign_view.dart';
+import 'package:geniozinho/src/ui/logic_balance/logic_balance_view.dart';
 import 'package:tuple/tuple.dart';
 
 import '../data/models/game_category.dart';
@@ -90,5 +91,8 @@ var appRoutes = {
           as Tuple2<GradientModel, int>),
   KeyUtil.numberPyramid: (context) => NumberPyramidView(
       colorTuple1: ModalRoute.of(context)?.settings.arguments
+          as Tuple2<GradientModel, int>),
+  KeyUtil.logicBalance: (context) => LogicBalanceView(
+      colorTuple: ModalRoute.of(context)?.settings.arguments
           as Tuple2<GradientModel, int>),
 };

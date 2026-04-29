@@ -54,9 +54,24 @@ class HomeButtonView extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: getDefaultDecoration(
-                    bgColor: tuple2.item1.bgColor,
-                    radius: getPercentSize(height, 8)),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      tuple2.item1.colorTuple.item1,
+                      tuple2.item1.colorTuple.item2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: tuple2.item1.colorTuple.item1.withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
                 margin: EdgeInsets.only(top: getPercentSize(height, 12)),
                 padding: EdgeInsets.only(
                     top: getPercentSize(height, 20),
@@ -67,7 +82,10 @@ class HomeButtonView extends StatelessWidget {
                         Theme.of(context)
                             .textTheme
                             .titleSmall!
-                            .copyWith(fontWeight: FontWeight.bold),
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: tuple2.item1.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white : Colors.black87,
+                            ),
                         title,
                         TextAlign.center,
                         getPercentSize(remainHeight, 11)),
@@ -79,14 +97,9 @@ class HomeButtonView extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(
                                 getPercentSize(remainHeight, 95))),
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black12.withOpacity(0.1),
-                                  spreadRadius: 0,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3))
-                            ]),
+                            color: Colors.white.withOpacity(0.2),
+                            border: Border.all(color: Colors.white.withOpacity(0.3)),
+                        ),
                         margin: EdgeInsets.symmetric(
                             vertical: getPercentSize(remainHeight, 12),
                             horizontal: getWidthPercentSize(context, 13)),
@@ -101,6 +114,10 @@ class HomeButtonView extends StatelessWidget {
                                 AppAssets.icTrophy,
                                 width: getPercentSize(height, 8),
                                 height: getPercentSize(height, 8),
+                                colorFilter: ColorFilter.mode(
+                                  tuple2.item1.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white : Colors.black87,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -116,16 +133,11 @@ class HomeButtonView extends StatelessWidget {
                                           .copyWith(
                                               fontSize: getPercentSize(
                                                   remainHeight, 10),
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w600,
+                                              color: tuple2.item1.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white : Colors.black87,
+                                          ),
                                       maxLines: 2,
-                                    )
-                                // getTextWidget(
-                                //     Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.white),
-                                //     model.overallScore.toString(),
-                                //     TextAlign.center,
-                                //     getPercentSize(
-                                //         subHeight, 18)),
-                                ),
+                                    )),
                           ],
                         ),
                       ),
@@ -133,13 +145,15 @@ class HomeButtonView extends StatelessWidget {
                     Expanded(
                         child: Container(
                       width: double.infinity,
-                      decoration: getDefaultDecoration(
-                          bgColor: tuple2.item1.primaryColor,
-                          radius: getPercentSize(height, 4)),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.25),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.white.withOpacity(0.3)),
+                      ),
                       child: Center(
                         child: getTextWidget(
                             Theme.of(context).textTheme.titleSmall!.copyWith(
-                                color: Colors.black,
+                                color: tuple2.item1.colorTuple.item1.computeLuminance() < 0.5 ? Colors.white : Colors.black87,
                                 fontWeight: FontWeight.bold),
                             'Jogar',
                             TextAlign.center,
