@@ -61,7 +61,7 @@ class TimeProvider extends CoinProvider {
     });
   }
 
-  final int totalTime;
+  int totalTime;
 
   DialogType dialogType = DialogType.non;
   TimerStatus timerStatus = TimerStatus.restart;

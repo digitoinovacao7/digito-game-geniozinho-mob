@@ -51,6 +51,8 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
   late int levelNo;
   late AdsFile adsFile;
   late BuildContext c;
+  int _consecutiveRights = 0;
+  int _consecutiveWrongs = 0;
 
   GameProvider({required TickerProvider vsync,
     required this.gameCategoryType,
@@ -224,6 +226,34 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
       dialogType = DialogType.over;
       pauseTimer();
       notifyListeners();
+    }
+  }
+
+  @override
+  addCoin() async {
+    await super.addCoin();
+    _consecutiveRights++;
+    _consecutiveWrongs = 0;
+    
+    if (_consecutiveRights >= 3) {
+      if (totalTime > 5) {
+        totalTime -= 2;
+        debugPrint("DDA: Aumentou a dificuldade. Novo tempo total: $totalTime s");
+      }
+      _consecutiveRights = 0;
+    }
+  }
+
+  @override
+  minusCoin({int? useCoin}) async {
+    await super.minusCoin(useCoin: useCoin);
+    _consecutiveWrongs++;
+    _consecutiveRights = 0;
+    
+    if (_consecutiveWrongs >= 2) {
+      totalTime += 3;
+      debugPrint("DDA: Diminuiu a dificuldade. Novo tempo total: $totalTime s");
+      _consecutiveWrongs = 0;
     }
   }
 

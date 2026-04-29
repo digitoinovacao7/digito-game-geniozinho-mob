@@ -102,7 +102,8 @@ class CommonGameOverDialogView extends StatelessWidget {
   }
 
   share() async {
-    await Share.share('Sua maior pontuação é $score\n ${getAppLink()}',
+    await Share.share(
+        '🧠 Fiz $score pontos no Gêniozinho! Você consegue superar meu recorde? Desafie sua mente agora! 🚀\n\nBaixe o app: ${getAppLink()}',
         subject: 'Gêniozinho');
   }
 }

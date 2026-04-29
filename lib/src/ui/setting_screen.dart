@@ -210,6 +210,8 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void share() async {
-    await Share.share(getAppLink(), subject: 'Gêniozinho');
+    await Share.share(
+        '🧠 Treine seu cérebro com o Gêniozinho! Jogos educativos de matemática, memória e lógica para todas as idades. 🚀\n\nBaixe agora: ${getAppLink()}',
+        subject: 'Gêniozinho');
   }
 }
