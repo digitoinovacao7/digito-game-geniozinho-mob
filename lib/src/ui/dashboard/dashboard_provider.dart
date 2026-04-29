@@ -210,6 +210,16 @@ class DashboardProvider extends CoinProvider {
           getScoreboard(keyLogicBalance),
           AppAssets.icPicturePuzzle,
         ));
+
+        list.add(GameCategory(
+          20,
+          "Sequência Explosiva",
+          keySequenceExplosive,
+          GameCategoryType.SEQUENCE_EXPLOSIVE,
+          KeyUtil.sequenceExplosive,
+          getScoreboard(keySequenceExplosive),
+          AppAssets.icMentalArithmetic,
+        ));
         break;
     }
     return _list;

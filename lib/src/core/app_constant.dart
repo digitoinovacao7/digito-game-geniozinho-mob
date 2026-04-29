@@ -24,6 +24,7 @@ enum GameCategoryType {
   CONCENTRATION,
   NUMERIC_MEMORY,
   LOGIC_BALANCE,
+  SEQUENCE_EXPLOSIVE,
 }
 
 enum PuzzleType { MATH_PUZZLE, MEMORY_PUZZLE, BRAIN_PUZZLE }
@@ -72,6 +73,7 @@ class KeyUtil {
   static const String numberPyramid = "NumberPyramid";
   static const String numericMemory = "numericMemory";
   static const String logicBalance = "logicBalance";
+  static const String sequenceExplosive = "sequenceExplosive";
   static Color primaryColor1 = "#FFCB43".toColor();
   static Color bgColor1 = "#FFF2D5".toColor();
   static Color backgroundColor1 = "#FFDB7C".toColor();
@@ -191,6 +193,8 @@ class KeyUtil {
         return numericMemoryTimeOut;
       case GameCategoryType.LOGIC_BALANCE:
         return logicBalanceTimeOut;
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return sequenceExplosiveTimeOut;
     }
   }
 
@@ -236,6 +240,8 @@ class KeyUtil {
         return numericMemoryScore;
       case GameCategoryType.LOGIC_BALANCE:
         return logicBalanceScore;
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return sequenceExplosiveScore;
     }
   }
 
@@ -281,6 +287,8 @@ class KeyUtil {
         return numericMemoryScoreMinus;
       case GameCategoryType.LOGIC_BALANCE:
         return logicBalanceScoreMinus;
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return sequenceExplosiveScoreMinus;
     }
   }
 
@@ -325,6 +333,8 @@ class KeyUtil {
         return numericMemoryCoin;
       case GameCategoryType.LOGIC_BALANCE:
         return logicBalanceCoin;
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return sequenceExplosiveCoin;
     }
   }
 
@@ -443,6 +453,10 @@ class KeyUtil {
   static double logicBalanceScore = 1;
   static double logicBalanceScoreMinus = -1;
   static double logicBalanceCoin = 0.5;
+  static int sequenceExplosiveTimeOut = 20;
+  static double sequenceExplosiveScore = 1;
+  static double sequenceExplosiveScoreMinus = -1;
+  static double sequenceExplosiveCoin = 0.5;
 }
 
 extension ColorExtension on String {

@@ -181,6 +181,15 @@ class DialogInfoUtil {
           correctAnswerScore: KeyUtil.logicBalanceScore,
           wrongAnswerScore: KeyUtil.logicBalanceScoreMinus,
         );
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return GameInfoDialog(
+          title: "Sequência Explosiva",
+          colorTuple: tuple2,
+          image: "assets/gif/mental-arith-intro.gif",
+          dec: "Memorize a sequência de operações e dê o resultado final.",
+          correctAnswerScore: KeyUtil.sequenceExplosiveScore,
+          wrongAnswerScore: KeyUtil.sequenceExplosiveScoreMinus,
+        );
     }
   }
 }

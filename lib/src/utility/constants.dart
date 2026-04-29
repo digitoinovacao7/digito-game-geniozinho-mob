@@ -38,6 +38,7 @@ String keyPicturePuzzle = "picture_puzzle";
 String keyNumberPyramid = "number_pyramid";
 String keyNumericMemory = "numeric_memory";
 String keyLogicBalance = "logic_balance";
+String keySequenceExplosive = "sequence_explosive";
 String fontFamily = "Montserrat";
 
 String fontFamily1 = "Poppins";

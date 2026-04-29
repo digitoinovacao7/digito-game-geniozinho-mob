@@ -21,6 +21,7 @@ import 'package:geniozinho/src/ui/splash/splash_view.dart';
 import 'package:geniozinho/src/ui/squareRoot/square_root_view.dart';
 import 'package:geniozinho/src/ui/guessTheSign/guess_sign_view.dart';
 import 'package:geniozinho/src/ui/logic_balance/logic_balance_view.dart';
+import 'package:geniozinho/src/ui/sequence_explosive/sequence_explosive_view.dart';
 import 'package:tuple/tuple.dart';
 
 import '../data/models/game_category.dart';
@@ -93,6 +94,9 @@ var appRoutes = {
       colorTuple1: ModalRoute.of(context)?.settings.arguments
           as Tuple2<GradientModel, int>),
   KeyUtil.logicBalance: (context) => LogicBalanceView(
+      colorTuple: ModalRoute.of(context)?.settings.arguments
+          as Tuple2<GradientModel, int>),
+  KeyUtil.sequenceExplosive: (context) => SequenceExplosiveView(
       colorTuple: ModalRoute.of(context)?.settings.arguments
           as Tuple2<GradientModel, int>),
 };

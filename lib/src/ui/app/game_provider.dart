@@ -25,6 +25,7 @@ import 'package:geniozinho/src/ui/dashboard/dashboard_provider.dart';
 
 import '../../data/repository/numeric_memory_repository.dart';
 import 'package:geniozinho/src/data/repository/logic_balance_repository.dart';
+import 'package:geniozinho/src/data/repository/sequence_explosive_repository.dart';
 
 int rightCoin = 10;
 int wrongCoin = 5;
@@ -337,6 +338,8 @@ class GameProvider<T> extends TimeProvider with WidgetsBindingObserver {
         return CubeRootRepository.getCubeDataList(level);
       case GameCategoryType.LOGIC_BALANCE:
         return LogicBalanceRepository.getLogicBalanceDataList(level) as List<T>;
+      case GameCategoryType.SEQUENCE_EXPLOSIVE:
+        return SequenceExplosiveRepository.getSequenceExplosiveDataList(level) as List<T>;
     }
   }
 }
