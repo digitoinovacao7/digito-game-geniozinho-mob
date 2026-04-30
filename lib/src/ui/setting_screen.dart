@@ -118,6 +118,7 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
         const SizedBox(height: 16),
         _buildSectionTitle(context, "Outros"),
+        _buildNavigationTile(context, "Zoe seu amigo 🤪", Icons.sentiment_very_satisfied_outlined, () => _launchWhatHappen()),
         _buildNavigationTile(context, "Siga no Instagram", Icons.camera_alt_outlined, () => _launchInstagram()),
         _buildNavigationTile(context, "Compartilhar", Icons.share_outlined, () => share()),
         _buildNavigationTile(context, "Avalie-nos", Icons.star_outline, () => _showRateDialog()),
@@ -212,6 +213,13 @@ class _SettingScreenState extends State<SettingScreen> {
 
   void _launchInstagram() async {
     const String url = 'https://www.instagram.com/geniozinhogame/';
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
+      throw 'Não foi possível abrir $url';
+    }
+  }
+
+  void _launchWhatHappen() async {
+    const String url = 'https://whathappen.com.br/';
     if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
       throw 'Não foi possível abrir $url';
     }

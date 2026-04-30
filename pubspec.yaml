@@ -1,7 +1,7 @@
 name: geniozinho
 description: Gêniozinho
 publish_to: "none"
-version: 3.1.7+11
+version: 3.1.8+12
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -44,6 +44,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.3
   intl_utils: ^2.8.13
+  flutter_native_splash: ^2.4.3
 
 flutter:
   uses-material-design: true
@@ -94,3 +95,15 @@ flutter_icons:
   image_path: "assets/geniozinho_mascote.png"
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/geniozinho_mascote.png"
+
+flutter_native_splash:
+  color: "#F5F9F5"
+  image: "assets/geniozinho_mascote.png"
+  color_dark: "#1F1D2B"
+  image_dark: "assets/geniozinho_mascote.png"
+
+  android_12:
+    color: "#F5F9F5"
+    image: "assets/geniozinho_mascote.png"
+    color_dark: "#1F1D2B"
+    image_dark: "assets/geniozinho_mascote.png"
