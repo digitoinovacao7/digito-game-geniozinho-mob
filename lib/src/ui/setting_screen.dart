@@ -118,6 +118,7 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
         const SizedBox(height: 16),
         _buildSectionTitle(context, "Outros"),
+        _buildNavigationTile(context, "Siga no Instagram", Icons.camera_alt_outlined, () => _launchInstagram()),
         _buildNavigationTile(context, "Compartilhar", Icons.share_outlined, () => share()),
         _buildNavigationTile(context, "Avalie-nos", Icons.star_outline, () => _showRateDialog()),
         _buildNavigationTile(context, "Feedback", Icons.feedback_outlined, () => _showFeedbackDialog()),
@@ -206,6 +207,13 @@ class _SettingScreenState extends State<SettingScreen> {
   void _launchURL() async {
     if (!await launchUrl(Uri.parse(privacyURL))) {
       throw 'Não foi possível iniciar $privacyURL';
+    }
+  }
+
+  void _launchInstagram() async {
+    const String url = 'https://www.instagram.com/geniozinhogame/';
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
+      throw 'Não foi possível abrir $url';
     }
   }
 

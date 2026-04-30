@@ -553,6 +553,29 @@ getSettingWidget(BuildContext context, {Function? function}) {
   );
 }
 
+Widget getInstagramWidget(BuildContext context) {
+  return InkWell(
+    onTap: () async {
+      const String url = 'https://www.instagram.com/geniozinhogame/';
+      try {
+        if (await canLaunchUrlString(url)) {
+          await launchUrlString(url);
+        }
+      } catch (e) {
+        debugPrint('Erro ao abrir Instagram: $e');
+      }
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Icon(
+        Icons.camera_alt_outlined,
+        size: FetchPixels.getPixelHeight(60),
+        color: Theme.of(context).textTheme.titleMedium!.color,
+      ),
+    ),
+  );
+}
+
 getScoreWidget(BuildContext context, {Color? color, bool? isCenter}) {
   return Row(
     mainAxisAlignment:

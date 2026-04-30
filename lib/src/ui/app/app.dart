@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.theme,
         darkTheme: AppTheme.darkTheme,
         themeMode: themeMode,
-        initialRoute: KeyUtil.splash,
+        initialRoute: KeyUtil.dashboard,
         routes: appRoutes,
         navigatorObservers: [observer],
         localizationsDelegates: const [

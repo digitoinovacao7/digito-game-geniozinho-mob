@@ -195,6 +195,8 @@ class _DashboardViewState extends State<DashboardView>
                       ),
                       _buildStreakWidget(context),
                       const SizedBox(width: 16),
+                      getInstagramWidget(context),
+                      const SizedBox(width: 12),
                       getSettingWidget(context),
                     ],
                   ),
@@ -286,7 +288,7 @@ class _DashboardViewState extends State<DashboardView>
                   getFooterWidget(
                     context,
                     '© ${DateTime.now().year} Geniozinho. Todos os direitos reservados.',
-                    "https://geniozinho.com.br/",
+                    "https://geniozinho.com.br/politica-privacidade",
                   ),
                 ],
               ),
