@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "geniozinho-adf35"
+  },
+  "targets": {
+    "geniozinho-adf35": {
+      "hosting": {
+        "prod": [
+          "geniozinho-adf35"
+        ],
+        "staging": [
+          "dev-geniozinho"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
