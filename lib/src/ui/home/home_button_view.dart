@@ -110,7 +110,7 @@ class HomeButtonView extends StatelessWidget {
                             border: Border.all(color: Colors.white.withOpacity(0.3)),
                         ),
                         margin: EdgeInsets.symmetric(
-                            vertical: getPercentSize(remainHeight, 8),
+                            vertical: getPercentSize(remainHeight, 4),
                             horizontal: getWidthPercentSize(context, 13)),
                         padding: EdgeInsets.symmetric(
                             vertical: getPercentSize(remainHeight, 4)),
