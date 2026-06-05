@@ -55,4 +55,5 @@ Future<void> main() async {
 setupServiceLocator(SharedPreferences sharedPreferences) {
   GetIt.I.registerSingleton<DashboardProvider>(
       DashboardProvider(preferences: sharedPreferences));
+  GetIt.I.registerSingleton<CoinProvider>(CoinProvider());
 }

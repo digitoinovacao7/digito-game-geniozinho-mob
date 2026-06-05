@@ -5,6 +5,7 @@ import 'package:geniozinho/src/data/models/score_board.dart';
 import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/app/coin_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/models/game_category.dart';
 import '../../utility/constants.dart';
@@ -259,6 +260,25 @@ class DashboardProvider extends CoinProvider {
   void setOverallScore(int highestScore, int newScore) {
     _overallScore = getOverallScore() - highestScore + newScore;
     preferences.setInt("overall_score", _overallScore);
+    _syncScoreToFirebase(_overallScore);
+  }
+
+  Future<void> _syncScoreToFirebase(int score) async {
+    try {
+      final nickname = preferences.getString('player_nickname');
+      if (nickname != null && nickname.isNotEmpty) {
+        // We use a specific collection and document structure
+        // Document ID can be the nickname to ensure uniqueness, or just add a new doc if we want multiple
+        // Better: use the nickname as ID so it updates the same user's score.
+        await FirebaseFirestore.instance.collection('leaderboard').doc(nickname).set({
+          'nickname': nickname,
+          'score': score,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      }
+    } catch (e) {
+      print("Error syncing score to Firebase: $e");
+    }
   }
 
   bool isFirstTime(GameCategoryType gameCategoryType) {

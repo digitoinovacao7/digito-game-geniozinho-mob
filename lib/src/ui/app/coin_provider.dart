@@ -36,4 +36,23 @@ class CoinProvider with ChangeNotifier {
     coin = newCoin;
     notifyListeners();
   }
+
+  addCoins(int amount) async {
+    await _initPrefs();
+    await _prefs!.setInt(keyCoin, (coin + amount));
+    coin = _prefs!.getInt(keyCoin) ?? 0;
+    notifyListeners();
+  }
+
+  Future<bool> buyItem(int price) async {
+    await _initPrefs();
+    if (coin >= price) {
+      final newCoin = coin - price;
+      await _prefs!.setInt(keyCoin, newCoin);
+      coin = newCoin;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
 }

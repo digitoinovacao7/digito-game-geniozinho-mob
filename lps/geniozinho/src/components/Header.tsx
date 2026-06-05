@@ -16,13 +16,13 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-b z-50">
+    <header className="fixed top-0 left-0 right-0 bg-slate-950/80 backdrop-blur-md border-b border-white/10 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Logo className="w-10 h-10 text-primary" />
-            <span className="font-poppins font-bold text-xl text-foreground">Gêniozinho</span>
+            <Logo className="w-10 h-10 text-amber-400" />
+            <span className="font-poppins font-bold text-xl text-white">Gêniozinho</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -31,7 +31,7 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
+                className="text-slate-300 hover:text-white transition-colors duration-200 font-medium"
               >
                 {item.title}
               </Link>
@@ -45,7 +45,7 @@ const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="outline" className="rounded-full">
+              <Button className="rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold border-0">
                 <Smartphone className="w-4 h-4 mr-2" />
                 Baixe o App
               </Button>
@@ -58,22 +58,22 @@ const Header = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-foreground" />
+              <X className="w-6 h-6 text-white" />
             ) : (
-              <Menu className="w-6 h-6 text-foreground" />
+              <Menu className="w-6 h-6 text-white" />
             )}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t pt-4">
+          <div className="lg:hidden mt-4 pb-4 border-t border-white/10 pt-4">
             <nav className="flex flex-col space-y-3">
               {menuItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
+                  className="text-slate-300 hover:text-white transition-colors duration-200 font-medium py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.title}
@@ -85,7 +85,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 className="w-full"
               >
-                <Button variant="outline" className="w-full mt-4 rounded-full">
+                <Button className="w-full mt-4 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
                   <Smartphone className="w-4 h-4 mr-2" />
                   Baixe o App
                 </Button>

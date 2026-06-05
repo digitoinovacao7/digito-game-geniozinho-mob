@@ -5,6 +5,7 @@ import 'package:geniozinho/src/data/models/dashboard.dart';
 import 'package:geniozinho/src/ui/app/theme_provider.dart';
 import 'package:geniozinho/src/ui/common/common_tab_animation_view.dart';
 import 'package:geniozinho/src/utility/constants.dart';
+import 'dart:ui' as ui;
 import 'package:provider/provider.dart';
 
 class DashboardButtonView extends StatefulWidget {
@@ -102,25 +103,35 @@ class _DashboardButtonViewState extends State<DashboardButtonView>
                       child: Stack(
                         children: [
                           Positioned.fill(
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    widget.dashboard.colorTuple.item1,
-                                    widget.dashboard.colorTuple.item2,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: widget.dashboard.colorTuple.item1.withOpacity(0.4),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: BackdropFilter(
+                                filter: ui.ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        widget.dashboard.colorTuple.item1.withOpacity(0.85),
+                                        widget.dashboard.colorTuple.item2.withOpacity(0.65),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24),
+                                    border: Border.all(
+                                      color: Colors.white.withOpacity(0.4),
+                                      width: 1.5,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: widget.dashboard.colorTuple.item1.withOpacity(0.3),
+                                        blurRadius: 15,
+                                        offset: const Offset(0, 8),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),

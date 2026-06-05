@@ -22,6 +22,7 @@ import 'package:geniozinho/src/ui/squareRoot/square_root_view.dart';
 import 'package:geniozinho/src/ui/guessTheSign/guess_sign_view.dart';
 import 'package:geniozinho/src/ui/logic_balance/logic_balance_view.dart';
 import 'package:geniozinho/src/ui/sequence_explosive/sequence_explosive_view.dart';
+import 'package:geniozinho/src/ui/store/store_view.dart';
 import 'package:tuple/tuple.dart';
 
 import '../data/models/game_category.dart';
@@ -31,6 +32,7 @@ import '../ui/numericMemory/numeric_view.dart';
 import '../ui/trueFalseQuiz/true_false_view.dart';
 
 var appRoutes = {
+  '/store': (context) => StoreView(),
   KeyUtil.dashboard: (context) => DashboardView(),
   KeyUtil.splash: (context) => SplashView(),
   KeyUtil.home: (context) => HomeView(

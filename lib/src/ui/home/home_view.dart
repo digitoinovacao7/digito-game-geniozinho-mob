@@ -16,6 +16,7 @@ import '../../data/models/game_category.dart';
 import '../../utility/constants.dart';
 import '../app/theme_provider.dart';
 import '../model/gradient_model.dart';
+import 'dart:ui' as ui;
 
 class HomeView extends StatefulWidget {
   final Tuple2<Dashboard, double> tuple2;
@@ -135,8 +136,51 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: getNoneAppBar(context),
-      body: Column(
+      body: Stack(
         children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: Theme.of(context).brightness == Brightness.dark
+                    ? [const Color(0xFF15141F), const Color(0xFF1F1D2B)]
+                    : [const Color(0xFFF8F9FA), const Color(0xFFE9ECEF)],
+              ),
+            ),
+          ),
+          Positioned(
+            top: -100,
+            left: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blueAccent.withOpacity(Theme.of(context).brightness == Brightness.dark ? 0.3 : 0.15),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -50,
+            right: -100,
+            child: Container(
+              width: 350,
+              height: 350,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.orangeAccent.withOpacity(Theme.of(context).brightness == Brightness.dark ? 0.25 : 0.15),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: BackdropFilter(
+              filter: ui.ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+          Column(
+            children: [
           Expanded(
             flex: 1,
             child: Container(
@@ -243,9 +287,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               ),
             ),
           ),
-          getBanner(context, adsFile)
-        ],
-      ),
+            getBanner(context, adsFile)
+          ],
+        ),
+      ]),
     );
   }
 

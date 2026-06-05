@@ -6,6 +6,7 @@ import 'package:geniozinho/src/core/app_constant.dart';
 import 'package:geniozinho/src/ui/common/common_tab_animation_view.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
+import 'dart:ui' as ui;
 
 import '../../data/models/dashboard.dart';
 import '../../utility/constants.dart';
@@ -51,31 +52,39 @@ class HomeButtonView extends StatelessWidget {
         builder: (context, value, child) {
           return Stack(
             children: [
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      tuple2.item1.colorTuple.item1,
-                      tuple2.item1.colorTuple.item2,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: tuple2.item1.colorTuple.item1.withOpacity(0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          tuple2.item1.colorTuple.item1.withOpacity(0.85),
+                          tuple2.item1.colorTuple.item2.withOpacity(0.65),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.4),
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: tuple2.item1.colorTuple.item1.withOpacity(0.3),
+                          blurRadius: 15,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(top: getPercentSize(height, 12)),
-                padding: EdgeInsets.only(
-                    top: getPercentSize(height, 14),
-                    bottom: getPercentSize(height, 6)),
+                    margin: EdgeInsets.only(top: getPercentSize(height, 12)),
+                    padding: EdgeInsets.only(
+                        top: getPercentSize(height, 14),
+                        bottom: getPercentSize(height, 6)),
                 child: Column(
                   children: [
                     getTextWidget(
@@ -166,6 +175,8 @@ class HomeButtonView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
               Align(
                 alignment: Alignment.topCenter,
                 child: SvgPicture.asset(

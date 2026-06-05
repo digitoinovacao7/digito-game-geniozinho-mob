@@ -18,7 +18,7 @@ import PoliticaCookies from "./pages/PoliticaCookies";
 import PerguntasFrequentes from "./pages/PerguntasFrequentes";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import WhatsAppButton from "./components/WhatsAppButton";
+// WhatsAppButton removed
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,7 +47,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ScrollToTopButton />
-          <WhatsAppButton />
+          {/* WhatsAppButton removed */}
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
